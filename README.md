@@ -1,4 +1,4 @@
-# smartbecho
+# easilybecho
 
 A new Flutter project.
 

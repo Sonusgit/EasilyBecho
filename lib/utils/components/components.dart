@@ -13,4 +13,15 @@ class Components {
        ),
     );
   }
+
+  static Widget buildElevatedButton({
+    required String label,
+    required VoidCallback onPressed,
+    bool isLoading = false,
+  }) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      child: isLoading ? CircularProgressIndicator() : Text(label),
+    );
+  }
 }

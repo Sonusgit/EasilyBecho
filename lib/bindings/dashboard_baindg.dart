@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:smartbecho/controllers/dashboard_controller.dart';
+import 'package:easilybecho/controllers/dashboard_controller.dart';
 
 class DashboardBaindg extends Bindings {
   @override

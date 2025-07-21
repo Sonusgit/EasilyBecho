@@ -1,8 +1,8 @@
+import 'package:easilybecho/routes/app_pages.dart';
+import 'package:easilybecho/routes/app_routes.dart';
+import 'package:easilybecho/utils/page_not_found.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:smartbecho/routes/app_pages.dart';
-import 'package:smartbecho/routes/app_routes.dart';
-import 'package:smartbecho/utils/page_not_found.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
 
       debugShowCheckedModeBanner: false,
 
-      title: 'SmartBecho',
+      title: 'EasilyBecho',
 
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
