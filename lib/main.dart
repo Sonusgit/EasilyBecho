@@ -1,6 +1,9 @@
 import 'package:easilybecho/routes/app_pages.dart';
 import 'package:easilybecho/routes/app_routes.dart';
-import 'package:easilybecho/utils/page_not_found.dart';
+import 'package:easilybecho/test.dart';
+import 'package:easilybecho/utility/page_not_found.dart';
+import 'package:easilybecho/utility/themes/app_theme.dart';
+import 'package:easilybecho/views/bill/bills_last_month_data_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,13 +23,16 @@ class MyApp extends StatelessWidget {
 
       title: 'EasilyBecho',
 
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkThame,
+      themeMode: ThemeMode.system,
+       // Use system theme mode
+        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+
       initialRoute: AppPages.initial,
       getPages: AppPages.routes,
       unknownRoute: GetPage(name:AppRoutes.notFound, page:() => PageNotFound(),),
-      // home: HomeScreen(),
+      //  home: BillsLastMonthDataScreen(),
     );
   }
 }

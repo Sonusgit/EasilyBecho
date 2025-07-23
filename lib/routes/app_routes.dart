@@ -14,7 +14,10 @@ class AppRoutes {
 
   static const String fiveStepform = '/fiveStepform';
 
-  
+  /// other screens
+  static const billScreen = '/bill_screen';
+  static const billsLastMonth = '/bills_last_month';
+
   // Error Routes
   static const String notFound = '/404';
   static const String error = '/error';
@@ -30,6 +33,7 @@ class AppRoutes {
     dashboard,
     profile,
     settings,
+    billScreen,
     notFound,
     error,
   ];

@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:easilybecho/models/profile_model.dart';
 import 'package:easilybecho/services/api_service.dart';
-import 'package:easilybecho/utils/urls/urls.dart';
+import 'package:easilybecho/utility/urls/urls.dart';
 
 class ProfileController extends GetxController {
   RxBool isLoading = false.obs;
@@ -17,9 +17,9 @@ class ProfileController extends GetxController {
     isLoading.value = true;
     try {
       // Assuming ApiService.requestGetApi returns a ProfileModel
-      final response = await ApiService.requestGetApi<ProfileModel>(
+      final response = await ApiService.requestGetApi(
         url: Urls.currentUser,
-        token: Urls.token,
+        token: true,
         fromJson: (json) => ProfileModel.fromJson(json),
       );
       if (response != null) {

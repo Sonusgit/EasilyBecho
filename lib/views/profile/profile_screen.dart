@@ -7,7 +7,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final profileController = Get.put(ProfileController());
+    final profileController = Get.find<ProfileController>();
 
     return Scaffold(
       appBar: AppBar(title: const Text("Profile")),

@@ -1,3 +1,6 @@
+import 'package:easilybecho/bindings/bill_binding.dart';
+import 'package:easilybecho/views/bill/bill_screen.dart';
+import 'package:easilybecho/views/bill/bills_last_month_data_screen.dart';
 import 'package:get/route_manager.dart';
 import 'package:easilybecho/bindings/auth_binding.dart';
 import 'package:easilybecho/bindings/dashboard_baindg.dart';
@@ -43,5 +46,21 @@ class AppPages {
       transition: Transition.downToUp,
       transitionDuration: Duration(milliseconds: 300),
     ),
+
+    //Bill Screen
+    GetPage(name: AppRoutes.billScreen,
+     page: () => BillScreen(),
+     binding: BillBinding(),
+     transition: Transition.downToUp,
+     transitionDuration: Duration(microseconds: 300)
+     ),
+    // Bill Last months
+      GetPage(name: AppRoutes.billsLastMonth,
+     page: () => BillsLastMonthDataScreen(),
+    //  binding: BillBinding(),
+     transition: Transition.downToUp,
+     transitionDuration: Duration(microseconds: 300)
+     )
+
   ];
 }
