@@ -2,7 +2,7 @@ import 'package:easilybecho/controllers/bill_controller.dart';
 import 'package:easilybecho/routes/app_routes.dart';
 import 'package:easilybecho/utility/components/components.dart';
 import 'package:easilybecho/utility/const/app_colors.dart';
-import 'package:easilybecho/views/bill/bills_last_month_data_screen.dart';
+import 'package:easilybecho/views/bill/components/bills_last_month_data_caeds.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -47,7 +47,7 @@ class _BillScreenState extends State<BillScreen> {
                   children: [
                     Components.buildElevatedButton(
                       label: 'go to lastmosth ',
-                      onPressed: () => Get.toNamed(AppRoutes.billsLastMonth),
+                      onPressed: () => Get.to(BillsLastMonthDataCaeds()),
                     ),
                   ],
                 ),
@@ -63,7 +63,7 @@ class _BillScreenState extends State<BillScreen> {
   Widget billslastmonthadd() {
     return Components.buildCard(
       width: 200,
-
+      
       onTap: () => Get.bottomSheet(
         Padding(
           padding: const EdgeInsets.only(top: 150),
@@ -122,9 +122,9 @@ class _BillScreenState extends State<BillScreen> {
             ),
           ),
         ),
-
         isScrollControlled: true,
         isDismissible: true,
+        
         enableDrag: true,
       ),
     );

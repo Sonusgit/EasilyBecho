@@ -45,27 +45,28 @@ class Components {
     );
   }
 
-  static Widget buildElevatedButton({
+  static Widget buildButton({
     required String label,
     required VoidCallback onPressed,
     bool isLoading = false,
-    double? width = double.infinity,
-    double? height = 50.0,
+    // double? width = double.infinity,
+    // double? height = 20.0,
     Color? color,
     IconData? icon,
     Color? iconColor,
-    Color? textColor = Colors.white,
+    // Color? textColor = Colors.white,
     double? iconSize = 25.0,
+    // TextStyle? textStyle
   }) {
     return Expanded(
       child: Container(
         margin: const EdgeInsets.all(5.0),
-        width: width,
-        height: height,
+        // width: width,
+        // height: height,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: color,
-            foregroundColor: textColor,
+            // foregroundColor: textColor,
           ),
 
           onPressed: onPressed,
@@ -75,17 +76,16 @@ class Components {
                   mainAxisAlignment: MainAxisAlignment.center,
 
                   children: [
-                    if (icon != null)
-                      Icon(icon, size: iconSize, color: iconColor),
+                    if (icon != null) Icon(icon, color: iconColor),
 
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
                       child: Text(
                         label,
                         style: TextStyle(
-                          fontSize: 16.0,
+                          // fontSize: 15.0,
                           fontWeight: FontWeight.bold,
-                          color: textColor,
+                          // color: textColor,
                         ),
                       ),
                     ),
@@ -96,8 +96,41 @@ class Components {
     );
   }
 
+  static Widget buildElevatedButton({
+    required String label,
+    IconData? icon,
+    Color ? color,
+    Color ? textColor,
+    required void Function()? onPressed,
+    bool isLoading = false,
+  }) {
+    return ElevatedButton(
+      style:ElevatedButton.styleFrom(
+        backgroundColor: color,
+        foregroundColor: textColor,
+      ) ,
+      onPressed: onPressed, child:  isLoading ? CircularProgressIndicator(): Wrap(
+                
+                  children: [
+                    if (icon != null) Icon(icon,),
+
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Text(
+                        label,
+                        style: TextStyle(
+                          // fontSize: 15.0,
+                          fontWeight: FontWeight.bold,
+                          // color: textColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),);
+  }
+
   static Widget buildCard({
-    Widget? child,
+   Widget? child,
     double? height,
     double? width,
     Color? color,
@@ -115,10 +148,73 @@ class Components {
             color: color,
             borderRadius: BorderRadius.circular(8.0), // Match Card's shape
           ),
-          height: height ?? 100.0,
-          width: width ?? 100.0,
+          height: height,
+          width: width,
           padding: const EdgeInsets.all(12.0),
           child: child,
+        ),
+      ),
+    );
+  }
+
+  static Widget buildOverviewCards({
+    String? title,
+    IconData? icon,
+    Color? color,
+    VoidCallback? onTap,
+    String? value,
+    double? height,
+    double? width,
+  }) {
+    return Card.outlined(
+      // color: Colors.red,
+      child: InkWell(
+        onTap: onTap,
+        splashColor: Colors.blue.withOpacity(0.2), // Optional: ripple color
+        borderRadius: BorderRadius.circular(8.0),
+        child: Container(
+          decoration: BoxDecoration(
+            // color: color,
+            borderRadius: BorderRadius.circular(8.0), // Match Card's shape
+          ),
+          height: height ?? 100.0,
+          width: width ?? 200.0,
+          padding: const EdgeInsets.all(12.0),
+          child: Stack(
+            children: [
+              Positioned(
+                child: Text(
+                  "$title",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              ),
+              Positioned(
+                right: 0,
+                top: 30,
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: color,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Icon(icon, color: Colors.white),
+                ),
+              ),
+
+              Positioned(
+                // right: 0,
+                top: 60,
+                child: Text(
+                  '$value',
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    // color: color,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

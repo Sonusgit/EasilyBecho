@@ -7,11 +7,11 @@ class BillController extends GetxController {
   // Rxn<ProfileModel> profile = Rxn<ProfileModel>();
 
   RxBool isLoading = false.obs;
-   @override
-    void onInit() {
-      super.onInit();
-      fetchBillsLastmonth();
-    }
+  @override
+  void onInit() {
+    super.onInit();
+    fetchBillsLastmonth();
+  }
 
   ///BilsLast
   Rxn<BillsLastMonthModel> bilsMonthData = Rxn<BillsLastMonthModel>();
@@ -24,14 +24,14 @@ class BillController extends GetxController {
         fromJson: (json) => BillsLastMonthModel.fromJson(json),
       );
       if (response != null) {
-        print(' sagklsgh${response.payload.thisMonthItems}');
+        print(' sagklsgh${response.payload}');
         bilsMonthData.value = response;
         isLoading.value = false;
       }
     } catch (e) {
-      isLoading.value = false;
-
       print('fail$e');
+    } finally {
+      isLoading.value = false;
     }
   }
 }

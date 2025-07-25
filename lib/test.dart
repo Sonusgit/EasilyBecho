@@ -1,58 +1,134 @@
+import 'package:easilybecho/utility/components/components.dart';
+import 'package:easilybecho/utility/const/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:http/http.dart' as http;
 
-class ChatPage extends StatelessWidget {
+class Test extends StatefulWidget {
+  const Test({super.key});
+
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Chat Page')),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Get.bottomSheet(
-              BottomSheetContent(),
-              isScrollControlled: true, // important for full height
-              backgroundColor: Colors.transparent,
-            );
-          },
-          child: Text("Open Bottom Page"),
-        ),
-      ),
-    );
-  }
+  State<Test> createState() => _TestState();
 }
 
-class BottomSheetContent extends StatelessWidget {
+class _TestState extends State<Test> {
+
+ 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
 
-    return Container(
-      height: screenHeight * 0.7, // 70% of screen height
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: Container(
-              width: 40,
-              height: 5,
-              margin: EdgeInsets.only(bottom: 16),
-              decoration: BoxDecoration(
-                color: Colors.grey[400],
-                borderRadius: BorderRadius.circular(10),
+  
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Text(
+              'StrutStyle? strutStyle, TextAlign? textAlign, TextDirection? textDirection, Locale? locale, bool? softWrap, TextOverflow? overflow, double? textScaleFactor, TextScaler? textScaler, int? maxLines, String? semanticsLabel, String? semanticsIdentifier, TextWidthBasis? textWidthBasis, TextHeightBehavior? textHeightBehavior, Color? selectionColor})',
+              style: TextStyle(fontSize: 20.h),
+            ),
+            SizedBox(
+              height: 150.h,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ListView(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      // physics: NeverScrollableScrollPhysics(),
+                      children: [
+                        Components.buildOverviewCards(
+                          icon: FontAwesomeIcons.arrowTrendUp,
+                          color: AppColors.overviewCardsPurpleAccent,
+                          title: 'Total Sales',
+                          value: '₹ ${1220}',
+                        ),
+                        Components.buildOverviewCards(
+                          icon: FontAwesomeIcons.boxOpen,
+                          color: AppColors.overviewCardsGreen,
+                          title: 'Available Stocks',
+                          value: '${1120}',
+                        ),
+                        Components.buildOverviewCards(
+                          icon: FontAwesomeIcons.mobileScreenButton,
+                          color: AppColors.overviewCardsOrange,
+                          title: 'Phone Sold',
+                          value: '${12}',
+                        ),
+                        Components.buildOverviewCards(
+                          icon: FontAwesomeIcons.creditCard,
+                          color: AppColors.overviewCardsCyanAccent,
+                          title: 'EMI Dues',
+                          value: '₹ ${4500}',
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-          Text("Bottom Sheet Page", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          SizedBox(height: 16),
-          Text("Yahan aap chat settings, details, ya kuch bhi show kar sakte ho."),
-          // Add your content here
-        ],
+            Row(
+              children: [
+                Components.buildElevatedButton(
+                  color: AppColors.overviewCardsCyanAccent,
+                  icon: FontAwesomeIcons.creditCard,
+                  label: 'testind',
+                  onPressed: () => (),
+                ),
+                Components.buildElevatedButton(
+                  icon: FontAwesomeIcons.creditCard,
+                  color: AppColors.overviewCardsOrange,
+                  label: 'testind',
+                  onPressed: () => (),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Components.buildTextformField(
+                  label: 'login',
+                  controller: TextEditingController(),
+                ),
+              ],
+            ),
+            Container(
+              width: 250.w, // Responsive width
+              height: 50.h, // Responsive height
+              margin: EdgeInsets.all(10.w),
+              child: ElevatedButton(
+                onPressed: () {
+                  print("Button clicked!");
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.deepPurple,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                      12.r,
+                    ), // Responsive radius
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.touch_app, size: 22.sp, color: Colors.white),
+                    SizedBox(width: 10.w),
+                    Text(
+                      'Responsive Button',
+                      style: TextStyle(
+                        fontSize: 18.sp, // Responsive text size
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            
+          ],
+        ),
       ),
     );
   }

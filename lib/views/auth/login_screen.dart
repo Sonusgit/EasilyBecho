@@ -23,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final authController = Get.find<AuthController>();
     return Scaffold(
-      appBar: AppBar(),
+      // appBar: AppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Form(
@@ -58,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Obx(() {
                     return Row(
                       children: [
-                        Components.buildElevatedButton(
+                        Components.buildButton(
                           isLoading: authController.isLoading.value,
                           onPressed: () {
                             // Get.toNamed(AppRoutes.dashboard);

@@ -1,6 +1,6 @@
 import 'package:easilybecho/bindings/bill_binding.dart';
 import 'package:easilybecho/views/bill/bill_screen.dart';
-import 'package:easilybecho/views/bill/bills_last_month_data_screen.dart';
+import 'package:easilybecho/views/bill/components/bills_last_month_data_caeds.dart';
 import 'package:get/route_manager.dart';
 import 'package:easilybecho/bindings/auth_binding.dart';
 import 'package:easilybecho/bindings/dashboard_baindg.dart';
@@ -12,7 +12,7 @@ import 'package:easilybecho/views/profile/profile_screen.dart';
 import 'package:easilybecho/views/splash/splash_screen.dart';
 
 class AppPages {
-  static const String initial = AppRoutes.login;
+  static const String initial = AppRoutes.dashboard;
 
   static final routes = [
     // Splash Screen Route
@@ -54,10 +54,10 @@ class AppPages {
      transition: Transition.downToUp,
      transitionDuration: Duration(microseconds: 300)
      ),
-    // Bill Last months
-      GetPage(name: AppRoutes.billsLastMonth,
-     page: () => BillsLastMonthDataScreen(),
-    //  binding: BillBinding(),
+    // Bill Last months Card
+      GetPage(name: AppRoutes.billsLastMonthCards,
+     page: () => BillsLastMonthDataCaeds(),
+     binding: BillBinding(),
      transition: Transition.downToUp,
      transitionDuration: Duration(microseconds: 300)
      )

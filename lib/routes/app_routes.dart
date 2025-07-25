@@ -16,7 +16,7 @@ class AppRoutes {
 
   /// other screens
   static const billScreen = '/bill_screen';
-  static const billsLastMonth = '/bills_last_month';
+  static const billsLastMonthCards = '/bills_last_month_cards';
 
   // Error Routes
   static const String notFound = '/404';
