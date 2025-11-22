@@ -2,13 +2,13 @@ class AppRoutes {
   // Authentication Routes
   static const String splash = '/splash';
   static const String welcome = '/welcome';
-  static const String login = '/login';
+  static const String loginScreen = '/login_screen';
   static const String signup = '/signup';
   static const String resetPassword = '/reset-password';
   static const String verifyEmail = '/verify-email';
 
   // Main App Routes
-  static const String dashboard = '/dashboard';
+  static const String dashboardScreen = '/dashboard_screen';
   static const String profile = '/profile';
   static const String settings = '/settings';
 
@@ -19,6 +19,7 @@ class AppRoutes {
   static const billsLastMonthCards = '/bills_last_month_cards';
 
   // Error Routes
+  static const String noInternetConnection = '/no-internet-connection';
   static const String notFound = '/404';
   static const String error = '/error';
 
@@ -26,11 +27,11 @@ class AppRoutes {
   static List<String> get allRoutes => [
     splash,
     welcome,
-    login,
+    loginScreen,
     signup,
     resetPassword,
     verifyEmail,
-    dashboard,
+    dashboardScreen,
     profile,
     settings,
     billScreen,

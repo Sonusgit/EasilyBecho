@@ -1,70 +1,295 @@
 import 'dart:convert';
+import 'dart:developer' show log;
 
-import 'package:easilybecho/utility/shared_preferences_utility.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
+import 'package:easilybecho/core/helpers/toast_helper.dart';
+import 'package:easilybecho/services/shared_preferences_helper.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 class ApiService {
-  static Future<T?> requestGetApi<T>({
+  final Dio _dio = Dio();
+
+  Future<Response?> requestGetForApi({
     required String url,
-    required bool token,
-    Map<String, dynamic>? queryParams,
-    T Function(Map<String, dynamic>)? fromJson,
+    Map<String, dynamic>? dictParameter,
+    required bool authToken,
   }) async {
-    final uri = Uri.parse(url).replace(queryParameters: queryParams);
-    try {
-      print('Requesting GET: $uri');
-      // final headers = getHeader(token);
-      final response = await http
-          .get(uri, headers: await getHeader(token))
-          .timeout(const Duration(seconds: 10));
-
-      if (response.statusCode == 200) {
-        print('Response data: ${response.body}');
-        if (fromJson != null) {
-          return fromJson(jsonDecode(response.body));
-        } else {
-          return null;
-        }
-        // 🔄 Better to return data
-      } else {
-        print('Request failed with status: ${response.statusCode}.');
-        return null;
-      }
-    } catch (e) {}
-  }
-
-  static Future<dynamic> requestPostApi(String url, dynamic data) async {
-   try {
-      http.Response response = await http.post(
-      Uri.parse(url),
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: jsonEncode(data),
-    );
-    if (response.statusCode == 200) {
-      print('Response data: ${response.body}');
-      final decodedData = jsonDecode(response.body);
-      return decodedData;
-    } else {
-      print('Rrequest failed with Status: ${response.statusCode}');
+    log("gteAuthToken = $authToken");
+    log("getRequest url = $url");
+    log("getRequest parameter = ${dictParameter.toString()}");
+    bool hasInternet = await InternetConnectionChecker.instance.hasConnection;
+    if (!hasInternet) {
+      log("❌ No Internet Connection");
+      ToastHelper.warning("No Internet Connection");
+      return Response(
+        requestOptions: RequestOptions(path: url),
+        statusCode: 0,
+        statusMessage: "No Internet Connection",
+        data: {"error": "No Internet"},
+      );
     }
-   } catch (e) {
-     print('Error occurred: $e');
-   }
+    try {
+      final response = await _dio.get(
+        url,
+        queryParameters: dictParameter,
+        options: Options(
+          contentType: 'application/json',
+          headers: await getHeader(authToken),
+          sendTimeout: Duration(seconds: 30),
+          receiveTimeout: Duration(seconds: 30),
+          validateStatus: (_) => true,
+        ),
+      );
+      log("getResponse=${response.data}");
+      return response;
+    } catch (e, s) {
+      log("getException=$e");
+      log("getStacktrace=$s");
+      return Response(
+        requestOptions: RequestOptions(path: url),
+        statusCode: 0,
+        statusMessage: e.toString(),
+        data: {"error": e},
+      );
+    }
   }
 
-  static Future<Map<String, String>> getHeader(bool token) async {
-    if (token) {
-      String? userToken = await SharedPreferencesUtility.getUserToken();
+  Future<Response?> requestPostForApi({
+    required String url,
+    Map<String, dynamic>? dictParameter,
+    required bool authToken,
+  }) async {
+    log("postAuthToken = $authToken");
+    log("postRequest url = $url");
+    log("postRequest parameter = ${dictParameter.toString()}");
+    bool hasInternet = await InternetConnectionChecker.instance.hasConnection;
+    if (!hasInternet) {
+      log("❌ No Internet Connection");
+      ToastHelper.warning("No Internet Connection");
+      return Response(
+        requestOptions: RequestOptions(path: url),
+        statusCode: 0,
+        statusMessage: "No Internet Connection",
+        data: {"error": "No Internet"},
+      );
+    }
+    try {
+      final response = await _dio.post(
+        url,
+        data: dictParameter,
+        options: Options(
+          headers: await getHeader(authToken),
+          sendTimeout: Duration(seconds: 30),
+          receiveTimeout: Duration(seconds: 30),
+          validateStatus: (_) => true,
+        ),
+      );
+      log("postResponse=${response.data}");
+      return response;
+    } catch (e, s) {
+      log("postException=$e");
+      log("postStacktrace=$s");
+      return Response(
+        requestOptions: RequestOptions(path: url),
+        statusCode: 0,
+        statusMessage: e.toString(),
+        data: {"error": e},
+      );
+    }
+  }
+
+  Future<Response?> requestPutForApi({
+    required String url,
+    Map<String, dynamic>? dictParameter,
+    required bool authToken,
+  }) async {
+    log("gteAuthToken = $authToken");
+    log("getRequest url = $url");
+    log("getRequest parameter = ${dictParameter.toString()}");
+    bool hasInternet = await InternetConnectionChecker.instance.hasConnection;
+    if (!hasInternet) {
+      log("❌ No Internet Connection");
+      ToastHelper.warning("No Internet Connection");
+      return Response(
+        requestOptions: RequestOptions(path: url),
+        statusCode: 0,
+        statusMessage: "No Internet Connection",
+        data: {"error": "No Internet"},
+      );
+    }
+    try {
+      final response = await _dio.put(
+        url,
+        queryParameters: dictParameter,
+        options: Options(
+          contentType: 'application/json',
+          headers: await getHeader(authToken),
+          sendTimeout: Duration(seconds: 30),
+          receiveTimeout: Duration(seconds: 30),
+          validateStatus: (_) => true,
+        ),
+      );
+      log("getResponse=${response.data}");
+      return response;
+    } catch (e, s) {
+      log("getException=$e");
+      log("getStacktrace=$s");
+      return Response(
+        requestOptions: RequestOptions(path: url),
+        statusCode: 0,
+        statusMessage: e.toString(),
+        data: {"error": e},
+      );
+    }
+  }
+
+  Future<Response?> requestPatchForApi({
+    required String url,
+    Map<String, dynamic>? dictParameter,
+    required bool authToken,
+  }) async {
+    log("gteAuthToken = $authToken");
+    log("getRequest url = $url");
+    log("getRequest parameter = ${dictParameter.toString()}");
+    bool hasInternet = await InternetConnectionChecker.instance.hasConnection;
+    if (!hasInternet) {
+      ToastHelper.warning("No Internet Connection");
+      log("❌ No Internet Connection");
+      return Response(
+        requestOptions: RequestOptions(path: url),
+        statusCode: 0,
+        statusMessage: "No Internet Connection",
+        data: {"error": "No Internet"},
+      );
+    }
+    try {
+      final response = await _dio.patch(
+        url,
+        queryParameters: dictParameter,
+        options: Options(
+          contentType: 'application/json',
+          headers: await getHeader(authToken),
+          sendTimeout: Duration(seconds: 30),
+          receiveTimeout: Duration(seconds: 30),
+          validateStatus: (_) => true,
+        ),
+      );
+      log("getResponse=${response.data}");
+      return response;
+    } catch (e, s) {
+      log("getException=$e");
+      log("getStacktrace=$s");
+      return Response(
+        requestOptions: RequestOptions(path: url),
+        statusCode: 0,
+        statusMessage: e.toString(),
+        data: {"error": e},
+      );
+    }
+  }
+
+  Future<Response?> requestDeleteForApi({
+    required String url,
+    Map<String, dynamic>? dictParameter,
+    required bool authToken,
+  }) async {
+    log("gteAuthToken = $authToken");
+    log("getRequest url = $url");
+    log("getRequest parameter = ${dictParameter.toString()}");
+    bool hasInternet = await InternetConnectionChecker.instance.hasConnection;
+    if (!hasInternet) {
+      ToastHelper.warning("No Internet Connection");
+      log("❌ No Internet Connection");
+      return Response(
+        requestOptions: RequestOptions(path: url),
+        statusCode: 0,
+        statusMessage: "No Internet Connection",
+        data: {"error": "No Internet"},
+      );
+    }
+    try {
+      final response = await _dio.delete(
+        url,
+        queryParameters: dictParameter,
+        options: Options(
+          contentType: 'application/json',
+          headers: await getHeader(authToken),
+          sendTimeout: Duration(seconds: 30),
+          receiveTimeout: Duration(seconds: 30),
+          validateStatus: (_) => true,
+        ),
+      );
+      log("getResponse=${response.data}");
+      return response;
+    } catch (e, s) {
+      log("getException=$e");
+      log("getStacktrace=$s");
+      return Response(
+        requestOptions: RequestOptions(path: url),
+        statusCode: 0,
+        statusMessage: e.toString(),
+        data: {"error": e},
+      );
+    }
+  }
+
+  Future<Response> requestPosForApi({
+    required String url,
+    Map<String, dynamic>? dictParameter,
+    required bool authToken,
+  }) async {
+    log("gteAuthToken = $authToken");
+    log("getRequest url = $url");
+    log("getRequest parameter = ${dictParameter.toString()}");
+    bool hasInternet = await InternetConnectionChecker.instance.hasConnection;
+    if (!hasInternet) {
+      ToastHelper.warning("No Internet Connection");
+      log("❌ No Internet Connection");
+      return Response(
+        requestOptions: RequestOptions(path: url),
+        statusCode: 0,
+        statusMessage: "No Internet Connection",
+        data: {"error": "No Internet"},
+      );
+    }
+    try {
+      final response = await _dio.post(
+        url,
+        queryParameters: dictParameter,
+        options: Options(
+          contentType: 'application/json',
+          headers: await getHeader(authToken),
+          sendTimeout: Duration(seconds: 30),
+          receiveTimeout: Duration(seconds: 30),
+          validateStatus: (_) => true,
+        ),
+      );
+      log("getResponse=${response.data}");
+      return response;
+    } catch (e, s) {
+      log("getException=$e");
+      log("getStacktrace=$s");
+      return Response(
+        requestOptions: RequestOptions(path: url),
+        statusCode: 0,
+        statusMessage: e.toString(),
+        data: {"error": e},
+      );
+    }
+  }
+
+  /// get headers
+  Future<Map<String, String>> getHeader(bool authToken) async {
+    if (authToken) {
+      String? jwtToken = await SharedPreferencesHelper.getJwtToken();
+      log("header token = : $jwtToken");
+
       return {
-        'Content-type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': ' Bearer $userToken',
+        "Content-type": "application/json",
+        "Authorization": "Bearer $jwtToken",
       };
     } else {
-      return {"Content-type": "application/json", "Accept": "application/json"};
+      return {"Content-type": "application/json"};
     }
   }
 }

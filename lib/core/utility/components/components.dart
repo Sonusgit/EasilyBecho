@@ -1,4 +1,4 @@
-import 'package:easilybecho/utility/const/app_colors.dart';
+import 'package:easilybecho/core/utility/const/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class Components {
@@ -99,38 +99,41 @@ class Components {
   static Widget buildElevatedButton({
     required String label,
     IconData? icon,
-    Color ? color,
-    Color ? textColor,
+    Color? color,
+    Color? textColor,
     required void Function()? onPressed,
     bool isLoading = false,
   }) {
     return ElevatedButton(
-      style:ElevatedButton.styleFrom(
+      style: ElevatedButton.styleFrom(
         backgroundColor: color,
         foregroundColor: textColor,
-      ) ,
-      onPressed: onPressed, child:  isLoading ? CircularProgressIndicator(): Wrap(
-                
-                  children: [
-                    if (icon != null) Icon(icon,),
+      ),
+      onPressed: onPressed,
+      child: isLoading
+          ? CircularProgressIndicator()
+          : Wrap(
+              children: [
+                if (icon != null) Icon(icon),
 
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Text(
-                        label,
-                        style: TextStyle(
-                          // fontSize: 15.0,
-                          fontWeight: FontWeight.bold,
-                          // color: textColor,
-                        ),
-                      ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(
+                    label,
+                    style: TextStyle(
+                      // fontSize: 15.0,
+                      fontWeight: FontWeight.bold,
+                      // color: textColor,
                     ),
-                  ],
-                ),);
+                  ),
+                ),
+              ],
+            ),
+    );
   }
 
   static Widget buildCard({
-   Widget? child,
+    Widget? child,
     double? height,
     double? width,
     Color? color,

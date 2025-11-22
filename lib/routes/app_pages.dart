@@ -1,18 +1,12 @@
-import 'package:easilybecho/bindings/bill_binding.dart';
-import 'package:easilybecho/views/bill/bill_screen.dart';
-import 'package:easilybecho/views/bill/components/bills_last_month_data_caeds.dart';
+import 'package:easilybecho/core/utility/utility_screen/not_network_screen.dart';
+import 'package:easilybecho/views/features/auth/presentation/login_screen.dart';
+import 'package:easilybecho/views/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:get/route_manager.dart';
-import 'package:easilybecho/bindings/auth_binding.dart';
-import 'package:easilybecho/bindings/dashboard_baindg.dart';
-import 'package:easilybecho/bindings/profile_binding.dart';
 import 'package:easilybecho/routes/app_routes.dart';
-import 'package:easilybecho/views/auth/login_screen.dart';
-import 'package:easilybecho/views/dashboard/dashboard_screen.dart';
-import 'package:easilybecho/views/profile/profile_screen.dart';
-import 'package:easilybecho/views/splash/splash_screen.dart';
+import 'package:easilybecho/views/features/splash/splash_screen.dart';
 
 class AppPages {
-  static const String initial = AppRoutes.dashboard;
+  static const String initial = AppRoutes.splash;
 
   static final routes = [
     // Splash Screen Route
@@ -22,45 +16,27 @@ class AppPages {
       transition: Transition.downToUp,
       transitionDuration: Duration(milliseconds: 300),
     ),
+
+    //loginScreen Route
     GetPage(
-      name: AppRoutes.login,
+      name: AppRoutes.loginScreen,
       page: () => LoginScreen(),
-      binding: AuthBinding(),
-      transition: Transition.fadeIn,
+      transition: Transition.downToUp,
       transitionDuration: Duration(milliseconds: 300),
     ),
-
-    // dashboard route
-    GetPage(
-      name: AppRoutes.dashboard,
+    
+     GetPage(
+      name: AppRoutes.dashboardScreen,
       page: () => DashboardScreen(),
-      binding: DashboardBaindg(),
       transition: Transition.downToUp,
       transitionDuration: Duration(milliseconds: 300),
     ),
-    // profile route
-    GetPage(
-      name: AppRoutes.profile,
-      page: () => ProfileScreen(),
-      binding: ProfileBinding(),
+     GetPage(
+      name: AppRoutes.noInternetConnection,
+      page: () => NotNetworkScreen(),
       transition: Transition.downToUp,
       transitionDuration: Duration(milliseconds: 300),
     ),
-
-    //Bill Screen
-    GetPage(name: AppRoutes.billScreen,
-     page: () => BillScreen(),
-     binding: BillBinding(),
-     transition: Transition.downToUp,
-     transitionDuration: Duration(microseconds: 300)
-     ),
-    // Bill Last months Card
-      GetPage(name: AppRoutes.billsLastMonthCards,
-     page: () => BillsLastMonthDataCaeds(),
-     binding: BillBinding(),
-     transition: Transition.downToUp,
-     transitionDuration: Duration(microseconds: 300)
-     )
-
+    
   ];
 }

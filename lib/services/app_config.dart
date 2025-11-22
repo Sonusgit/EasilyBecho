@@ -1,4 +1,4 @@
-class Urls {
+class  AppConfig {
   static const String baseUrl =
       'https://backend-production-91e4.up.railway.app';
   // static const String token =

@@ -1,5 +1,5 @@
-import 'package:easilybecho/utility/components/components.dart';
-import 'package:easilybecho/utility/const/app_colors.dart';
+import 'package:easilybecho/core/utility/components/components.dart';
+import 'package:easilybecho/core/utility/const/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
