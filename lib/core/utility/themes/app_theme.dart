@@ -5,7 +5,42 @@ import 'package:flutter/services.dart';
 class AppTheme {
   static ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
-    scaffoldBackgroundColor:  Colors.grey[50],
+    scaffoldBackgroundColor: Colors.grey[50],
+    appBarTheme: AppBarTheme(
+      iconTheme: IconThemeData(color: AppColors.scaffoldBackgroundColor),
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: const Color.fromARGB(255, 255, 0, 0),
+        statusBarIconBrightness: Brightness.dark,
+      ),
+      backgroundColor: Color.fromARGB(255, 203, 3, 3),
+      centerTitle: true,
+      actionsIconTheme: IconThemeData(color: AppColors.scaffoldBackgroundColor),
+      actionsPadding: EdgeInsets.all(8.0),
+      toolbarHeight: 64.0,
+      titleSpacing: 16.0,
+      leadingWidth: 72.0,
+      foregroundColor: Color(0xff212121),
+      titleTextStyle: TextStyle(
+        color: AppColors.scaffoldBackgroundColor,
+        fontSize: 20.0,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+
+    dropdownMenuTheme: DropdownMenuThemeData(
+      textStyle: TextStyle(fontWeight: FontWeight.w500, color: Colors.black),
+      menuStyle: MenuStyle(
+        backgroundColor: WidgetStatePropertyAll(Colors.white),
+        elevation: WidgetStatePropertyAll(8),
+        shape: WidgetStatePropertyAll(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+        maximumSize: WidgetStatePropertyAll(Size.infinite),
+      ),
+    ),
+
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.lightCardsColor,
@@ -15,35 +50,63 @@ class AppTheme {
         ),
       ),
     ),
-//     //card theme
+
     cardTheme: CardThemeData(
       elevation: 3,
       color: Colors.white,
-      // shape: RoundedRectangleBorder(
-      //   borderRadius: BorderRadius.circular(8.0),
-      //   side: BorderSide(color: Colors.grey.shade300),
-      // ),
+    ),
+
+    inputDecorationTheme: InputDecorationTheme(
+      iconColor: const Color(0xFF03DAC6),
+      activeIndicatorBorder: BorderSide(width: .5, color: Colors.grey),
+      prefixIconColor: const Color(0xFF03DAC6),
+      suffixIconColor: const Color(0xFF03DAC6),
+      filled: true,
+      fillColor: Colors.white,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(width: .5, color: Colors.grey),
+      ),
+      labelStyle: TextStyle(fontSize: 14),
+      hintStyle: TextStyle(fontSize: 13, color: Colors.grey),
+    ),
+
+    colorScheme: ColorScheme(
+      brightness: Brightness.light,
+      primary: const Color.fromARGB(255, 2, 255, 166),
+      onPrimary: Colors.white,
+      secondary: const Color(0xFF03DAC6),
+      onSecondary: Colors.white,
+      error: const Color(0xFFFF002F),
+      onError: Colors.black,
+      surface: const Color(0xFF1E1E1E),
+      onSurface: Colors.black,
     ),
   );
 
   static ThemeData darkThame = ThemeData(
     brightness: Brightness.dark,
-    primaryColor: AppColors.primaryColor,
+    scaffoldBackgroundColor: Color(0xff121212),
+    dividerColor: Colors.white.withOpacity(.1),
+    textSelectionTheme: TextSelectionThemeData(
+      cursorColor: const Color.fromARGB(255, 0, 238, 40),
+    ),
+    primaryColor: const Color.fromARGB(255, 1, 255, 192),
     secondaryHeaderColor: AppColors.secondaryColor,
     appBarTheme: AppBarTheme(
       iconTheme: IconThemeData(color: AppColors.scaffoldBackgroundColor),
-      systemOverlayStyle:SystemUiOverlayStyle(
+      systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: const Color.fromARGB(255, 255, 0, 0),
         statusBarIconBrightness: Brightness.dark,
-      ) ,
+      ),
       backgroundColor: Color.fromARGB(255, 203, 3, 3),
       centerTitle: true,
       actionsIconTheme: IconThemeData(color: AppColors.scaffoldBackgroundColor),
-      actionsPadding: EdgeInsets.all( 8.0),
+      actionsPadding: EdgeInsets.all(8.0),
       toolbarHeight: 64.0,
       titleSpacing: 16.0,
       leadingWidth: 72.0,
-      foregroundColor: Color( 0xff212121),
+      foregroundColor: Color(0xff212121),
       titleTextStyle: TextStyle(
         color: AppColors.scaffoldBackgroundColor,
         fontSize: 20.0,
@@ -51,11 +114,10 @@ class AppTheme {
       ),
     ),
 
-    //card theme
     cardTheme: CardThemeData(
       elevation: 3.0,
-      color: AppColors.darkCardsColor,
-                  shadowColor: Colors.transparent,
+      color: Color(0xff212121),
+      shadowColor: Colors.transparent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
     ),
 
@@ -63,12 +125,46 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         backgroundColor: Color(0xff212121),
         foregroundColor: AppColors.scaffoldBackgroundColor,
-
-        // iconColor: ,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
       ),
+    ),
+
+    inputDecorationTheme: InputDecorationTheme(
+      activeIndicatorBorder: BorderSide(width: .5, color: Colors.grey),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(width: .5, color: Colors.grey),
+      ),
+      labelStyle: TextStyle(fontSize: 14),
+      hintStyle: TextStyle(fontSize: 13, color: Colors.grey),
+    ),
+
+    dropdownMenuTheme: DropdownMenuThemeData(
+      textStyle: TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+      menuStyle: MenuStyle(
+        backgroundColor: WidgetStatePropertyAll(Color(0xFF1E1E1E)),
+        elevation: WidgetStatePropertyAll(8),
+        shape: WidgetStatePropertyAll(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+        maximumSize: WidgetStatePropertyAll(Size.infinite),
+      ),
+    ),
+
+    colorScheme: ColorScheme(
+      brightness: Brightness.dark,
+      primary: const Color.fromARGB(255, 2, 255, 166),
+      onPrimary: Colors.white,
+      secondary: const Color(0xFF03DAC6),
+      onSecondary: Colors.white,
+      error: const Color(0xFFFF002F),
+      onError: Colors.black,
+      surface: const Color(0xFF1E1E1E),
+      onSurface: Colors.white,
     ),
   );
 }
