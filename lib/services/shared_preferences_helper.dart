@@ -2,7 +2,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesHelper {
    static const String _isLoggedInKey = 'isLoggedIn';
-   static const String _jwtToken = 'token';
+   static const String _userToken = 'token';
+   static const String _refreshToken = 'refreshToken';
    static const String _userIdKey = 'userId';
    static const String _userNameKey = 'userName';
    static const String _userEmailKey = 'userEmail';
@@ -20,12 +21,21 @@ class SharedPreferencesHelper {
     return prefe.getBool(_isLoggedInKey)??false;
    }
 
-  static Future<void> setJwtToken(String token)async{
+  static Future<void> setUserToken(String token)async{
     final SharedPreferences prefe = await SharedPreferences.getInstance();
-    await prefe.setString(_jwtToken, token);
+    await prefe.setString(_userToken, token);
   }
-  static Future<String?> getJwtToken()async{
+  static Future<String?> getUserToken()async{
     SharedPreferences prefe =await SharedPreferences.getInstance();
-    return prefe.getString(_jwtToken);
+    return prefe.getString(_userToken);
+  }
+
+   static Future<void> setRefreshToken(String token)async{
+    final SharedPreferences prefe = await SharedPreferences.getInstance();
+    await prefe.setString(_refreshToken, token);
+  }
+  static Future<String?> getRefreshToken()async{
+    SharedPreferences prefe =await SharedPreferences.getInstance();
+    return prefe.getString(_refreshToken);
   }
 }

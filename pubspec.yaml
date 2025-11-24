@@ -45,6 +45,7 @@ dependencies:
   dio: ^5.9.0
   internet_connection_checker: ^3.0.1
   toastification: ^3.0.3
+  dropdown_search: ^6.0.2
 
 dev_dependencies:
   flutter_test:

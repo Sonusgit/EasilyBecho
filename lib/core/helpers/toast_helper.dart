@@ -17,13 +17,17 @@ class ToastHelper {
     );
   }
 
-   static error(String message) {
+   static error({
+    required String message,
+  String?  description 
+    }) {
     toastification.show(
       context: Get.context!,
       type: ToastificationType.error,
        style: ToastificationStyle.minimal,
       foregroundColor: Colors.black,
       title: Text(message),
+      description: Text(description??message),
        showIcon: true,
       autoCloseDuration: const Duration(seconds: 8),
       backgroundColor: Colors.redAccent,
@@ -32,7 +36,7 @@ class ToastHelper {
     );
   }
 
-  static info(String message) {
+  static info({ required String message}) {
     toastification.show(
       context: Get.context!,
       type: ToastificationType.info,
@@ -44,13 +48,16 @@ class ToastHelper {
     );
   }
 
-   static warning(String message) {
+   static warning({ required String message,
+    String? description
+   }) {
     toastification.show(
       context: Get.context!,
       type: ToastificationType.warning,
       backgroundColor: Colors.amber,
       style: ToastificationStyle.minimal,
-      title: Text(message),
+      title: Text(description??message),
+      description: Text(message),
       showIcon: true,
       foregroundColor: Colors.black,
       icon: Icon(Icons.warning_rounded,color: Colors.black ,),

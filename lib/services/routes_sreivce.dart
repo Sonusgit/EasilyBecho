@@ -11,6 +11,10 @@ class RoutesSreivce {
    static void toDashboard () {
     Get.toNamed(AppRoutes.dashboardScreen);
   }
-
+  
+  static void toBottomNavigationScreen () {
+    Get.offAllNamed(AppRoutes.bottomNavigationScreen);
+  }
+  
   
 } 

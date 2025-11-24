@@ -23,7 +23,7 @@ final  NetworkController controller =Get.find<NetworkController>();
           Text('Not Network Screen'),
           TextButton(onPressed: (){controller.chackNetworkConnection();
            // ignore: avoid_print
-           controller.isOnline.value ? Get.offAll(AppRoutes.dashboardScreen):print("");
+           controller.isOnline.value ? Get.back():print("");
           }, child: Text('Try Again'))
         ],
       ))),);

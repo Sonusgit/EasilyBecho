@@ -12,7 +12,7 @@ class AppTheme {
         statusBarColor: const Color.fromARGB(255, 255, 0, 0),
         statusBarIconBrightness: Brightness.dark,
       ),
-      backgroundColor: Color.fromARGB(255, 203, 3, 3),
+      backgroundColor:AppColors.primaryColor,
       centerTitle: true,
       actionsIconTheme: IconThemeData(color: AppColors.scaffoldBackgroundColor),
       actionsPadding: EdgeInsets.all(8.0),
@@ -33,9 +33,7 @@ class AppTheme {
         backgroundColor: WidgetStatePropertyAll(Colors.white),
         elevation: WidgetStatePropertyAll(8),
         shape: WidgetStatePropertyAll(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         ),
         maximumSize: WidgetStatePropertyAll(Size.infinite),
       ),
@@ -51,10 +49,7 @@ class AppTheme {
       ),
     ),
 
-    cardTheme: CardThemeData(
-      elevation: 3,
-      color: Colors.white,
-    ),
+    cardTheme: CardThemeData(elevation: 3, color: Colors.white),
 
     inputDecorationTheme: InputDecorationTheme(
       iconColor: const Color(0xFF03DAC6),
@@ -73,13 +68,13 @@ class AppTheme {
 
     colorScheme: ColorScheme(
       brightness: Brightness.light,
-      primary: const Color.fromARGB(255, 2, 255, 166),
+      primary: AppColors.primaryColor,
       onPrimary: Colors.white,
       secondary: const Color(0xFF03DAC6),
       onSecondary: Colors.white,
       error: const Color(0xFFFF002F),
       onError: Colors.black,
-      surface: const Color(0xFF1E1E1E),
+      surface: Colors.white,
       onSurface: Colors.black,
     ),
   );
@@ -147,9 +142,7 @@ class AppTheme {
         backgroundColor: WidgetStatePropertyAll(Color(0xFF1E1E1E)),
         elevation: WidgetStatePropertyAll(8),
         shape: WidgetStatePropertyAll(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         ),
         maximumSize: WidgetStatePropertyAll(Size.infinite),
       ),

@@ -34,14 +34,17 @@ class MyApp extends StatelessWidget {
           title: 'EasilyBecho',
         
           theme: AppTheme.lightTheme,
-          darkTheme: AppTheme.darkThame,
-          themeMode: ThemeMode.system,
+          // darkTheme: AppTheme.darkThame,
+          // themeMode: ThemeMode.system,
         
           // Use system theme mode
           // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           initialRoute: AppPages.initial,
           getPages: AppPages.routes,
-          unknownRoute: GetPage(
+         
+          defaultTransition: Transition.fadeIn,
+          transitionDuration: Duration(milliseconds: 100),
+          unknownRoute: GetPage( 
             name: AppRoutes.notFound,
             page: () => PageNotFound(),
           ),

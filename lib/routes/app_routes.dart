@@ -8,6 +8,7 @@ class AppRoutes {
   static const String verifyEmail = '/verify-email';
 
   // Main App Routes
+  static const String bottomNavigationScreen = '/bottom_navigation';
   static const String dashboardScreen = '/dashboard_screen';
   static const String profile = '/profile';
   static const String settings = '/settings';

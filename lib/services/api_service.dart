@@ -20,7 +20,7 @@ class ApiService {
     bool hasInternet = await InternetConnectionChecker.instance.hasConnection;
     if (!hasInternet) {
       log("❌ No Internet Connection");
-      ToastHelper.warning("No Internet Connection");
+      ToastHelper.warning(message: "No Internet Connection");
       return Response(
         requestOptions: RequestOptions(path: url),
         statusCode: 0,
@@ -65,7 +65,7 @@ class ApiService {
     bool hasInternet = await InternetConnectionChecker.instance.hasConnection;
     if (!hasInternet) {
       log("❌ No Internet Connection");
-      ToastHelper.warning("No Internet Connection");
+      ToastHelper.warning(message: "No Internet Connection");
       return Response(
         requestOptions: RequestOptions(path: url),
         statusCode: 0,
@@ -109,7 +109,7 @@ class ApiService {
     bool hasInternet = await InternetConnectionChecker.instance.hasConnection;
     if (!hasInternet) {
       log("❌ No Internet Connection");
-      ToastHelper.warning("No Internet Connection");
+      ToastHelper.warning(message: "No Internet Connection");
       return Response(
         requestOptions: RequestOptions(path: url),
         statusCode: 0,
@@ -153,7 +153,7 @@ class ApiService {
     log("getRequest parameter = ${dictParameter.toString()}");
     bool hasInternet = await InternetConnectionChecker.instance.hasConnection;
     if (!hasInternet) {
-      ToastHelper.warning("No Internet Connection");
+      ToastHelper.warning(message: "No Internet Connection");
       log("❌ No Internet Connection");
       return Response(
         requestOptions: RequestOptions(path: url),
@@ -198,7 +198,7 @@ class ApiService {
     log("getRequest parameter = ${dictParameter.toString()}");
     bool hasInternet = await InternetConnectionChecker.instance.hasConnection;
     if (!hasInternet) {
-      ToastHelper.warning("No Internet Connection");
+      ToastHelper.warning(message: "No Internet Connection");
       log("❌ No Internet Connection");
       return Response(
         requestOptions: RequestOptions(path: url),
@@ -243,7 +243,7 @@ class ApiService {
     log("getRequest parameter = ${dictParameter.toString()}");
     bool hasInternet = await InternetConnectionChecker.instance.hasConnection;
     if (!hasInternet) {
-      ToastHelper.warning("No Internet Connection");
+      ToastHelper.warning(message: "No Internet Connection");
       log("❌ No Internet Connection");
       return Response(
         requestOptions: RequestOptions(path: url),
@@ -255,7 +255,8 @@ class ApiService {
     try {
       final response = await _dio.post(
         url,
-        queryParameters: dictParameter,
+        // queryParameters: dictParameter,
+        data: dictParameter,
         options: Options(
           contentType: 'application/json',
           headers: await getHeader(authToken),
@@ -281,7 +282,7 @@ class ApiService {
   /// get headers
   Future<Map<String, String>> getHeader(bool authToken) async {
     if (authToken) {
-      String? jwtToken = await SharedPreferencesHelper.getJwtToken();
+      String? jwtToken = await SharedPreferencesHelper.getUserToken();
       log("header token = : $jwtToken");
 
       return {
