@@ -1,4 +1,4 @@
-import 'package:easilybecho/core/helpers/toast_helper.dart';
+import 'package:easilybecho/core/helpers/toast/toast_helper.dart';
 import 'package:easilybecho/services/api_service.dart';
 import 'package:easilybecho/services/app_config.dart';
 

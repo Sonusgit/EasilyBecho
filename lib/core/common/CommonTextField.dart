@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CommonTextField extends StatelessWidget {
   final String label;
-  final String ?hintText;
+  final String? hintText;
   final TextEditingController controller;
   final TextInputType keyboardType;
   final bool readOnly;
@@ -24,7 +25,8 @@ class CommonTextField extends StatelessWidget {
   final bool autofocus;
   final bool autocorrect;
   final bool enableSuggestions;
-  
+  final int? maxLength;
+  final bool digitsOnly;
 
   const CommonTextField({
     super.key,
@@ -50,7 +52,9 @@ class CommonTextField extends StatelessWidget {
     this.autofocus = false,
     this.autocorrect = true,
     this.enableSuggestions = true,
-    this.onChanged
+    this.onChanged,
+    this.maxLength,
+    this.digitsOnly = false,
   });
 
   @override
@@ -73,10 +77,18 @@ class CommonTextField extends StatelessWidget {
       autofocus: autofocus,
       autocorrect: autocorrect,
       enableSuggestions: enableSuggestions,
-    
+      maxLength: maxLength,
+      inputFormatters: digitsOnly
+          ? [
+              FilteringTextInputFormatter.digitsOnly,
+              if (maxLength != null)
+                LengthLimitingTextInputFormatter(maxLength),
+            ]
+          : null,
+
       decoration: InputDecoration(
         labelText: label,
-        hintText:'Enter $label',
+        hintText: 'Enter $label',
         labelStyle: const TextStyle(fontSize: 20),
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,

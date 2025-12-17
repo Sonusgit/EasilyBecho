@@ -1,10 +1,12 @@
 import 'package:easilybecho/core/utility/const/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   static ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
+    fontFamily: GoogleFonts.poppins().fontFamily,
     scaffoldBackgroundColor: Colors.grey[50],
     appBarTheme: AppBarTheme(
       iconTheme: IconThemeData(color: AppColors.scaffoldBackgroundColor),
@@ -41,8 +43,8 @@ class AppTheme {
 
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.lightCardsColor,
-        foregroundColor: AppColors.lightThemeTextColor,
+        backgroundColor: AppColors.primaryColor,
+        foregroundColor: AppColors.backgroundColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),

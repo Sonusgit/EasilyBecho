@@ -1,4 +1,4 @@
-import 'package:easilybecho/core/helpers/toast_helper.dart';
+import 'package:easilybecho/core/helpers/toast/toast_helper.dart';
 import 'package:easilybecho/services/routes_sreivce.dart';
 import 'package:easilybecho/services/shared_preferences_helper.dart';
 import 'package:easilybecho/views/features/auth/repo/login_repo.dart';

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:developer' show log;
 
 import 'package:dio/dio.dart';
-import 'package:easilybecho/core/helpers/toast_helper.dart';
+import 'package:easilybecho/core/helpers/toast/toast_helper.dart';
 import 'package:easilybecho/services/shared_preferences_helper.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
