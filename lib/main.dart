@@ -4,6 +4,7 @@ import 'package:easilybecho/routes/app_routes.dart';
 import 'package:easilybecho/test.dart';
 import 'package:easilybecho/core/utility/utility_screen/page_not_found.dart';
 import 'package:easilybecho/core/utility/themes/app_theme.dart';
+import 'package:easilybecho/test_bloc/tast_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -39,16 +40,16 @@ class MyApp extends StatelessWidget {
         
           // Use system theme mode
           // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          initialRoute: AppPages.initial,
-          getPages: AppPages.routes,
+          // initialRoute: AppPages.initial,
+          // getPages: AppPages.routes,
          
-          defaultTransition: Transition.fadeIn,
-          transitionDuration: Duration(milliseconds: 100),
-          unknownRoute: GetPage( 
-            name: AppRoutes.notFound,
-            page: () => PageNotFound(),
-          ),
-          //  home: Test(),
+          // defaultTransition: Transition.fadeIn,
+          // transitionDuration: Duration(milliseconds: 100),
+          // unknownRoute: GetPage( 
+          //   name: AppRoutes.notFound,
+          //   page: () => PageNotFound(),
+          // ),
+           home: TastScreen(),
         ),
       ),
     );
