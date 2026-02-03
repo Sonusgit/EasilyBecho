@@ -1,20 +1,20 @@
-import 'package:easilybecho/routes/app_routes.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+// import 'package:easilybecho/routes/app_routes.dart';
+// import 'package:get/get.dart';
+// import 'package:get/get_core/src/get_main.dart';
 
-class RoutesSreivce {
+// class RoutesSreivce {
 
-  static void toLogin () {
-    Get.toNamed(AppRoutes.loginScreen);
-  }
+//   static void toLogin () {
+//     Get.toNamed(AppRoutes.loginScreen);
+//   }
 
-   static void toDashboard () {
-    Get.toNamed(AppRoutes.dashboardScreen);
-  }
+//    static void toDashboard () {
+//     Get.toNamed(AppRoutes.dashboardScreen);
+//   }
   
-  static void toBottomNavigationScreen () {
-    Get.offAllNamed(AppRoutes.bottomNavigationScreen);
-  }
+//   static void toBottomNavigationScreen () {
+//     Get.offAllNamed(AppRoutes.bottomNavigationScreen);
+//   }
   
   
-} 
+// } 

@@ -1,4 +1,5 @@
 import 'package:easilybecho/core/utility/const/app_colors.dart';
+import 'package:easilybecho/core/utility/themes/widgets/app_text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,7 +15,7 @@ class AppTheme {
         statusBarColor: const Color.fromARGB(255, 255, 0, 0),
         statusBarIconBrightness: Brightness.dark,
       ),
-      backgroundColor:AppColors.primaryColor,
+      backgroundColor: AppColors.primaryColor,
       centerTitle: true,
       actionsIconTheme: IconThemeData(color: AppColors.scaffoldBackgroundColor),
       actionsPadding: EdgeInsets.all(8.0),
@@ -51,7 +52,14 @@ class AppTheme {
       ),
     ),
 
-    cardTheme: CardThemeData(elevation: 3, color: Colors.white),
+    // In your lightTheme
+    textTheme: AppTextTheme.lightTextTheme,
+
+    cardTheme: CardThemeData(
+      elevation: 3,
+      color: Colors.grey[50],
+      shadowColor: Colors.grey[200],
+    ),
 
     inputDecorationTheme: InputDecorationTheme(
       iconColor: const Color(0xFF03DAC6),
@@ -110,6 +118,8 @@ class AppTheme {
         fontWeight: FontWeight.bold,
       ),
     ),
+
+    textTheme: AppTextTheme.darkTextTheme,
 
     cardTheme: CardThemeData(
       elevation: 3.0,

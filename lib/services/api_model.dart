@@ -1,7 +1,11 @@
-class ApiModel {
+class ApiModel<T> {
   final bool status;
   final String message;
-  final dynamic data;
+  final T? data;
 
-  ApiModel({required this.status, required this.message, this.data});
+  ApiModel({
+    required this.status,
+    required this.message,
+    this.data,
+  });
 }

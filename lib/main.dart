@@ -1,19 +1,30 @@
+import 'package:device_preview/device_preview.dart';
+import 'package:easilybecho/core/charts/example_charts.dart';
 import 'package:easilybecho/core/utility/utility_screen/network_controller.dart';
 import 'package:easilybecho/routes/app_pages.dart';
 import 'package:easilybecho/routes/app_routes.dart';
-import 'package:easilybecho/test.dart';
+import 'package:easilybecho/services/environment_config.dart';
+import 'package:easilybecho/test_screen.dart';
 import 'package:easilybecho/core/utility/utility_screen/page_not_found.dart';
 import 'package:easilybecho/core/utility/themes/app_theme.dart';
 import 'package:easilybecho/test_bloc/tast_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:toastification/toastification.dart';
 
-void main() {
+Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  Get.put(NetworkController());
-  runApp(const MyApp());
+    // await dotenv.load(fileName: EnvironmentConfig.baseUrl);
+     await dotenv.load(fileName: ".env");
+  runApp(
+    DevicePreview(
+      enabled: true,
+      builder: (BuildContext context) {
+        return MyApp();
+      },
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -25,31 +36,20 @@ class MyApp extends StatelessWidget {
     print(MediaQuery.of(context).size.height);
     print(MediaQuery.of(context).size.width);
     return ScreenUtilInit(
-       designSize: const Size(392.72727272727275, 872.7272727272727),
+      designSize: const Size(392.72727272727275, 872.7272727272727),
       minTextAdapt: true,
       splitScreenMode: true,
       child: ToastificationWrapper(
-        child: GetMaterialApp(
+        child: MaterialApp(
           debugShowCheckedModeBanner: false,
-        
+
           title: 'EasilyBecho',
-        
+
           theme: AppTheme.lightTheme,
           // darkTheme: AppTheme.darkThame,
           // themeMode: ThemeMode.system,
-        
-          // Use system theme mode
-          // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          // initialRoute: AppPages.initial,
-          // getPages: AppPages.routes,
-         
-          // defaultTransition: Transition.fadeIn,
-          // transitionDuration: Duration(milliseconds: 100),
-          // unknownRoute: GetPage( 
-          //   name: AppRoutes.notFound,
-          //   page: () => PageNotFound(),
-          // ),
-           home: TastScreen(),
+
+          home: ChartsExamplePage(),
         ),
       ),
     );

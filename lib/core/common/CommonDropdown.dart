@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 
-class CommonDropdown extends StatelessWidget {
-  final List<String> items;
-  final String? value;
+class CommonDropdown<T> extends StatelessWidget {
+  final List<T> items;
+  final T? value;
   final String? hint;
   final String? label;
-  final Function(String?)? onChanged;
-  final String? Function(String?)? validator;
+  final Function(T?)? onChanged;
+  final String? Function(T?)? validator;
 
   const CommonDropdown({
     super.key,
@@ -21,7 +21,7 @@ class CommonDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownSearch<String>(
+    return DropdownSearch<T>(
       selectedItem: value,
 
       items: (filter, infiniteScrollProps) => items,
