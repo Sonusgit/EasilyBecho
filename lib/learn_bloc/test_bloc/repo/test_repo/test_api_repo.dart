@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:easilybecho/services/api_model.dart';
 import 'package:easilybecho/services/api_service.dart';
-import 'package:easilybecho/test_bloc/repo/test_repo/test_repo.dart';
+import 'package:easilybecho/learn_bloc/test_bloc/repo/test_repo/test_repo.dart';
 
 class TestApiRepo implements TestRepo {
   ApiService apiService = ApiService();

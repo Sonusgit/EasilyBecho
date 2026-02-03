@@ -1,5 +1,8 @@
-class AppRoutes {
+class AppRoutesPaths {
   // Authentication Routes
+  static const String counterApp = '/counter_app';
+  static const String switchExample = '/switch_example';
+
   static const String splash = '/splash';
   static const String welcome = '/welcome';
   static const String loginScreen = '/login_screen';
@@ -26,6 +29,8 @@ class AppRoutes {
 
   // Get all routes as a list for easy reference
   static List<String> get allRoutes => [
+    counterApp,
+    switchExample,
     splash,
     welcome,
     loginScreen,

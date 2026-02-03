@@ -1,210 +1,230 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter/widgets.dart';
-// import 'package:get/get.dart';
-// import 'package:get/get_core/src/get_main.dart';
-// import 'package:toastification/toastification.dart';
-
-// class ToastHelper {
-//   static success(String message, ) {
-//     toastification.show(
-//       context: Get.context!,
-//       type: ToastificationType.success,
-//       showIcon: true,
-//       title: Text(message),
-//       autoCloseDuration: Duration(seconds: 5),
-//       backgroundColor: Colors.green,
-//       icon: Icon(Icons.check_circle_outline,color: Colors.black,)
-//     );
-//   }
-
-//    static error({
-//     required String message,
-//   String?  description 
-//     }) {
-//     toastification.show(
-//       context: Get.context!,
-//       type: ToastificationType.error,
-//        style: ToastificationStyle.minimal,
-//       foregroundColor: Colors.black,
-//       title: Text(message),
-//       description: Text(description??message),
-//        showIcon: true,
-//       autoCloseDuration: const Duration(seconds: 8),
-//       backgroundColor: Colors.redAccent,
-//       icon: Icon(Icons.error_outline_rounded,color: Colors.black,)
-
-//     );
-//   }
-
-//   static info({ required String message}) {
-//     toastification.show(
-//       context: Get.context!,
-//       type: ToastificationType.info,
-//       title: Text(message),
-//       autoCloseDuration: const Duration(seconds: 7),
-//       showIcon: true,
-//       icon: Icon(Icons.info_outline_rounded,color: Colors.white,),
-//       backgroundColor: Colors.blue
-//     );
-//   }
-
-//    static warning({ required String message,
-//     String? description
-//    }) {
-//     toastification.show(
-//       context: Get.context!,
-//       type: ToastificationType.warning,
-//       backgroundColor: Colors.amber,
-//       style: ToastificationStyle.minimal,
-//       title: Text(description??message),
-//       description: Text(message),
-//       showIcon: true,
-//       foregroundColor: Colors.black,
-//       icon: Icon(Icons.warning_rounded,color: Colors.black ,),
-//       autoCloseDuration: const Duration(seconds: 10),
-//     );
-//   }
-   
-       
-  
-// }
-// lib/core/helpers/toast_helper.dart
+import 'package:easilybecho/core/navigation/app_key.dart';
 import 'package:flutter/material.dart';
 
 class ToastHelper {
-  /// Show success toast message
+  ToastHelper._();
+
+  static OverlayEntry? _currentToast;
+
   static void success({
-    required String message,
-    String? description,
-    required BuildContext context,
+    required String title,
+    String? message,
+    Duration duration = const Duration(seconds: 4),
   }) {
-    _showCustomSnackBar(
-      context: context,
+    _show(
+      title: title,
       message: message,
-      description: description,
-      backgroundColor: const Color(0xFF10B981),
+      background: const Color(0xFF10B981),
       icon: Icons.check_circle_rounded,
-      iconColor: Colors.white,
+      duration: duration,
     );
   }
 
-  /// Show error toast message
   static void error({
-    required String message,
-    String? description,
-    required BuildContext context,
+    required String title,
+    String? message,
+    Duration duration = const Duration(seconds: 10),
   }) {
-    _showCustomSnackBar(
-      context: context,
+    _show(
+      title: title,
       message: message,
-      description: description,
-      backgroundColor: const Color(0xFFEF4444),
+      background: const Color(0xFFEF4444),
       icon: Icons.error_rounded,
-      iconColor: Colors.white,
+      duration: duration,
     );
   }
 
-  /// Show info toast message
   static void info({
-    required String message,
-    String? description,
-    required BuildContext context,
+    required String title,
+    String? message,
+    Duration duration = const Duration(seconds: 4),
   }) {
-    _showCustomSnackBar(
-      context: context,
+    _show(
+      title: title,
       message: message,
-      description: description,
-      backgroundColor: const Color(0xFF3B82F6),
+      background: const Color(0xFF3B82F6),
       icon: Icons.info_rounded,
-      iconColor: Colors.white,
+      duration: duration,
     );
   }
 
-  /// Show warning toast message
   static void warning({
-    required String message,
-    String? description,
-    required BuildContext context,
+    required String title,
+    String? message,
+    Duration duration = const Duration(seconds: 4),
   }) {
-    _showCustomSnackBar(
-      context: context,
+    _show(
+      title: title,
       message: message,
-      description: description,
-      backgroundColor: const Color(0xFFFBBF24),
+      background: const Color(0xFFFBBF24),
       icon: Icons.warning_rounded,
-      iconColor: Colors.black87,
       textColor: Colors.black87,
+      duration: duration,
     );
   }
 
-  /// Show custom toast message
   static void custom({
-    required BuildContext context,
-    required String message,
-    String? description,
-    required Color backgroundColor,
+    required String title,
+    String? message,
+    required Color background,
     required IconData icon,
-    Color iconColor = Colors.white,
     Color textColor = Colors.white,
+    Duration duration = const Duration(seconds: 4),
   }) {
-    _showCustomSnackBar(
-      context: context,
+    _show(
+      title: title,
       message: message,
-      description: description,
-      backgroundColor: backgroundColor,
+      background: background,
       icon: icon,
-      iconColor: iconColor,
       textColor: textColor,
+      duration: duration,
     );
   }
 
-  /// Internal method to show custom styled snackbar
-  /// Internal method to show custom styled TOP toast using Overlay
-  static void _showCustomSnackBar({
-    required BuildContext context,
-    required String message,
-    String? description,
-    required Color backgroundColor,
+  static OverlayState? _getOverlayState() {
+    try {
+      return AppKey.navigatorKey.currentState?.overlay;
+    } catch (e) {
+      debugPrint('Error getting overlay state: $e');
+      return null;
+    }
+  }
+
+  static void _show({
+    required String title,
+    String? message,
+    required Color background,
     required IconData icon,
-    Color iconColor = Colors.white,
     Color textColor = Colors.white,
+    Duration duration = const Duration(seconds: 4),
   }) {
-    final overlay = Overlay.of(context);
+    _currentToast?.remove();
 
-    late OverlayEntry overlayEntry;
+    final overlayState = _getOverlayState();
 
-    overlayEntry = OverlayEntry(
-      builder: (context) {
-        return Positioned(
-          top: MediaQuery.of(context).padding.top + 16,
-          left: 16,
-          right: 16,
+    if (overlayState == null) {
+      return;
+    }
+
+    late OverlayEntry entry;
+
+    entry = OverlayEntry(
+      builder: (context) => _ToastWidget(
+        title: title,
+        message: message,
+        background: background,
+        icon: icon,
+        textColor: textColor,
+        onClose: () => _removeToast(entry),
+      ),
+    );
+
+    _currentToast = entry;
+    overlayState.insert(entry);
+
+    Future.delayed(duration, () {
+      _removeToast(entry);
+    });
+  }
+
+  static void _removeToast(OverlayEntry entry) {
+    try {
+      entry.remove();
+      if (_currentToast == entry) {
+        _currentToast = null;
+      }
+    } catch (e) {}
+  }
+
+  static void dismiss({required String title}) {
+    _currentToast?.remove();
+    _currentToast = null;
+  }
+}
+
+class _ToastWidget extends StatefulWidget {
+  final String title;
+  final String? message;
+  final Color background;
+  final IconData icon;
+  final Color textColor;
+  final VoidCallback onClose;
+
+  const _ToastWidget({
+    required this.title,
+    this.message,
+    required this.background,
+    required this.icon,
+    required this.textColor,
+    required this.onClose,
+  });
+
+  @override
+  State<_ToastWidget> createState() => _ToastWidgetState();
+}
+
+class _ToastWidgetState extends State<_ToastWidget>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<Offset> _slideAnimation;
+  late Animation<double> _fadeAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    );
+
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0, -1),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+
+    _fadeAnimation = Tween<double>(
+      begin: 0,
+      end: 1,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: MediaQuery.of(context).padding.top + 12,
+      left: 16,
+      right: 16,
+      child: SlideTransition(
+        position: _slideAnimation,
+        child: FadeTransition(
+          opacity: _fadeAnimation,
           child: Material(
             color: Colors.transparent,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               decoration: BoxDecoration(
-                color: backgroundColor,
+                color: widget.background,
                 borderRadius: BorderRadius.circular(12),
-                boxShadow: const [
+                boxShadow: [
                   BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 8,
-                    offset: Offset(0, 4),
+                    color: Colors.black.withOpacity(0.15),
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
                   ),
                 ],
               ),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Icon(icon, color: iconColor, size: 24),
-                  ),
+                  Icon(widget.icon, color: widget.textColor, size: 24),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Column(
@@ -212,46 +232,52 @@ class ToastHelper {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          message,
+                          widget.title,
                           style: TextStyle(
-                            color: textColor,
-                            fontSize: 15,
+                            color: widget.textColor,
                             fontWeight: FontWeight.w600,
+                            fontSize: 14,
                           ),
                         ),
-                        if (description != null && description.isNotEmpty) ...[
+                        if (widget.message != null) ...[
                           const SizedBox(height: 4),
                           Text(
-                            description,
+                            widget.message!,
                             style: TextStyle(
-                              color: textColor.withOpacity(0.9),
-                              fontSize: 13,
+                              color: widget.textColor.withOpacity(0.85),
+                              fontSize: 12,
+                              height: 1.4,
                             ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
-                         
-
                       ],
                     ),
                   ),
-                  // Expanded(child: SizedBox()),
+                  const SizedBox(width: 12),
                   GestureDetector(
-                    onTap: () => overlayEntry.remove(),
-                    child: const Icon(Icons.close, color: Colors.white, size: 24),
-                  )
+                    onTap: widget.onClose,
+                    child: Icon(Icons.close, color: widget.textColor, size: 20),
+                  ),
                 ],
               ),
             ),
           ),
-        );
-      },
+        ),
+      ),
     );
-
-    overlay.insert(overlayEntry);
-
-    // Auto dismiss after 4 seconds
-    Future.delayed(const Duration(seconds: 4), () {
-      overlayEntry.remove();
-    });
   }
 }
+
+void showSuccess(String title, [String? message]) =>
+    ToastHelper.success(title: title, message: message);
+
+void showError(String title, [String? message]) =>
+    ToastHelper.error(title: title, message: message);
+
+void showInfo(String title, [String? message]) =>
+    ToastHelper.info(title: title, message: message);
+
+void showWarning(String title, [String? message]) =>
+    ToastHelper.warning(title: title, message: message);

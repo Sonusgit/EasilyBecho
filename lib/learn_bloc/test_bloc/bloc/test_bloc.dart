@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:easilybecho/core/utility/const/app_enums.dart';
-import 'package:easilybecho/test_bloc/repo/test_repo/test_repo.dart';
+import 'package:easilybecho/learn_bloc/test_bloc/repo/test_repo/test_repo.dart';
 import 'package:equatable/equatable.dart';
 
 part 'test_event.dart';

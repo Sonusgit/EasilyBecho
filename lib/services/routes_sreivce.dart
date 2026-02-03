@@ -5,15 +5,15 @@
 // class RoutesSreivce {
 
 //   static void toLogin () {
-//     Get.toNamed(AppRoutes.loginScreen);
+//     Get.toNamed(AppRoutesPaths.loginScreen);
 //   }
 
 //    static void toDashboard () {
-//     Get.toNamed(AppRoutes.dashboardScreen);
+//     Get.toNamed(AppRoutesPaths.dashboardScreen);
 //   }
   
 //   static void toBottomNavigationScreen () {
-//     Get.offAllNamed(AppRoutes.bottomNavigationScreen);
+//     Get.offAllNamed(AppRoutesPaths.bottomNavigationScreen);
 //   }
   
   

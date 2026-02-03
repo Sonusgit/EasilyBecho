@@ -1,6 +1,6 @@
 import 'package:easilybecho/core/utility/const/app_enums.dart';
-import 'package:easilybecho/test_bloc/bloc/test_bloc.dart';
-import 'package:easilybecho/test_bloc/repo/test_repo/test_api_repo.dart';
+import 'package:easilybecho/learn_bloc/test_bloc/bloc/test_bloc.dart';
+import 'package:easilybecho/learn_bloc/test_bloc/repo/test_repo/test_api_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -64,7 +64,7 @@ class ApiService {
     if (!hasInternet) {
       log("❌ No Internet Connection");
       if (context != null) {
-        ToastHelper.warning(message: "No Internet Connection", context: context);
+        ToastHelper.warning(title: "No Internet Connection",  );
       }
       return Response(
         requestOptions: RequestOptions(path: url),
@@ -112,7 +112,7 @@ class ApiService {
     if (!hasInternet) {
       log("❌ No Internet Connection");
       if (context != null) {
-        ToastHelper.warning(message: "No Internet Connection", context: context);
+        ToastHelper.warning(title: "No Internet Connection",);
       }
       return Response(
         requestOptions: RequestOptions(path: url),
@@ -159,7 +159,7 @@ class ApiService {
     if (!hasInternet) {
       log("❌ No Internet Connection");
       if (context != null) {
-        ToastHelper.warning(message: "No Internet Connection", context: context);
+        ToastHelper.warning(title: "No Internet Connection",  );
       }
       return Response(
         requestOptions: RequestOptions(path: url),
@@ -237,7 +237,7 @@ class ApiService {
     if (!hasInternet) {
       log("❌ No Internet Connection");
       if (context != null) {
-        ToastHelper.warning(message: "No Internet Connection", context: context);
+        ToastHelper.warning(title: "No Internet Connection",  );
       }
       return Response(
         requestOptions: RequestOptions(path: url),
@@ -285,7 +285,7 @@ class ApiService {
     if (!hasInternet) {
       log("❌ No Internet Connection");
       if (context != null) {
-        ToastHelper.warning(message: "No Internet Connection", context: context);
+        ToastHelper.warning(title: "No Internet Connection",);
       }
       return Response(
         requestOptions: RequestOptions(path: url),
@@ -333,7 +333,7 @@ class ApiService {
     if (!hasInternet) {
       log("❌ No Internet Connection");
       if (context != null) {
-        ToastHelper.warning(message: "No Internet Connection", context: context);
+        ToastHelper.warning(title: "No Internet Connection",  );
       }
       return Response(
         requestOptions: RequestOptions(path: url),
