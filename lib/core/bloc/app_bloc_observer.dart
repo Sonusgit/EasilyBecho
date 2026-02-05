@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 
@@ -6,7 +7,10 @@ class AppBlocObserver extends BlocObserver {
   void onCreate(BlocBase bloc) {
     super.onCreate(bloc);
     if (kDebugMode) {
-      print('onCreate -- ${bloc.runtimeType}');
+      log(
+        'onCreate -- ${bloc.runtimeType}',
+        name: 'BlocObs',
+      );
     }
   }
 
@@ -14,7 +18,10 @@ class AppBlocObserver extends BlocObserver {
   void onEvent(Bloc bloc, Object? event) {
     super.onEvent(bloc, event);
     if (kDebugMode) {
-      print('onEvent -- ${bloc.runtimeType}, $event');
+      log(
+        'onEvent -- ${bloc.runtimeType}, $event',
+        name: 'BlocObs',
+      );
     }
   }
 
@@ -22,7 +29,10 @@ class AppBlocObserver extends BlocObserver {
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
     if (kDebugMode) {
-      print('onChange -- ${bloc.runtimeType}, $change');
+      log(
+        'onChange -- ${bloc.runtimeType}, $change',
+        name: 'BlocObs',
+      );
     }
   }
 
@@ -30,22 +40,23 @@ class AppBlocObserver extends BlocObserver {
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);
     if (kDebugMode) {
-      print('onTransition -- ${bloc.runtimeType}, $transition');
-    }
-  }
-
-  @override
-  void onDone(Bloc bloc, Object? event, [Object? error, StackTrace? stackTrace]) {
-    super.onDone(bloc, event, error, stackTrace);
-    if (kDebugMode) {
-      print('onDone -- ${bloc.runtimeType}, $event, $error');
+      log(
+        'onTransition -- ${bloc.runtimeType}, $transition',
+        name: 'BlocObs',
+      );
     }
   }
 
   @override
   void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
     if (kDebugMode) {
-      print('onError -- ${bloc.runtimeType}, $error');
+      log(
+        'onError -- ${bloc.runtimeType}',
+        name: 'BlocObs',
+        level: 800,
+        error: error,
+        stackTrace: stackTrace,
+      );
     }
     super.onError(bloc, error, stackTrace);
   }
@@ -54,7 +65,10 @@ class AppBlocObserver extends BlocObserver {
   void onClose(BlocBase bloc) {
     super.onClose(bloc);
     if (kDebugMode) {
-      print('onClose -- ${bloc.runtimeType}');
+      log(
+        'onClose -- ${bloc.runtimeType}',
+        name: 'BlocObs',
+      );
     }
   }
 }

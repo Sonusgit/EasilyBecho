@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:easilybecho/core/bloc/app_bloc_provider.dart';
 import 'package:easilybecho/core/navigation/routes/app_pages.dart';
 import 'package:easilybecho/core/utility/themes/app_theme.dart';
@@ -27,6 +28,8 @@ class MyApp extends StatelessWidget {
         builder: (context, child) {
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
+            locale: DevicePreview.locale(context),
+            builder: DevicePreview.appBuilder,
             routerConfig: AppPages.routes,
             title: 'EasilyBecho',
             theme: AppTheme.lightTheme,

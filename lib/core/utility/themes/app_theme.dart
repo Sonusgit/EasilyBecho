@@ -17,7 +17,7 @@ class AppTheme {
       ),
       backgroundColor: AppColors.primaryColor,
       centerTitle: true,
-      actionsIconTheme: IconThemeData(color: AppColors.scaffoldBackgroundColor),
+      actionsIconTheme: IconThemeData(color: AppColors.scaffoldBackgroundColor,),
       actionsPadding: EdgeInsets.all(8.0),
       toolbarHeight: 64.0,
       titleSpacing: 16.0,
@@ -54,6 +54,7 @@ class AppTheme {
 
     // In your lightTheme
     textTheme: AppTextTheme.lightTextTheme,
+    
 
     cardTheme: CardThemeData(
       elevation: 3,

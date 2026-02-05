@@ -8,4 +8,11 @@ sealed class SwitchEvent extends Equatable {
 }
 
 class EnableOrDisableNotification extends SwitchEvent{}
-// class DisableNotification extends SwitchEvent{}
+class ControllerOpacity extends SwitchEvent{
+  final double opacity;
+  const ControllerOpacity({ required this.opacity});
+
+  @override
+  List<Object> get props => [opacity];
+  
+}

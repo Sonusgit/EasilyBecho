@@ -1,7 +1,11 @@
+import 'package:easilybecho/learn_bloc/image_picer/image_picker_screen.dart';
+
 class AppRoutesPaths {
   // Authentication Routes
   static const String counterApp = '/counter_app';
   static const String switchExample = '/switch_example';
+  // image_picker_screen.dart
+  static const imagePickerScreen = '/image_picker_screen';
 
   static const String splash = '/splash';
   static const String welcome = '/welcome';

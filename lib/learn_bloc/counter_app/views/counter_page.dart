@@ -1,6 +1,5 @@
 import 'package:easilybecho/core/extensions/size_extension.dart';
 import 'package:easilybecho/learn_bloc/counter_app/bloc/counter_bloc.dart';
-import 'package:easilybecho/learn_bloc/counter_app/bloc/counter_cubit.dart';
 import 'package:easilybecho/learn_bloc/counter_app/bloc/counter_events.dart';
 import 'package:easilybecho/learn_bloc/counter_app/bloc/counter_state.dart';
 import 'package:flutter/material.dart';
