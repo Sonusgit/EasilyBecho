@@ -1,7 +1,7 @@
 import 'package:easilybecho/core/navigation/app_key.dart';
 import 'package:easilybecho/core/navigation/routes/app_routes_paths.dart';
 import 'package:easilybecho/learn_bloc/counter_app/views/counter_page.dart';
-import 'package:easilybecho/learn_bloc/image_picer/image_picker_screen.dart';
+import 'package:easilybecho/learn_bloc/image_picker/image_picker_screen.dart';
 import 'package:easilybecho/learn_bloc/switch_example/views/switch_example_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

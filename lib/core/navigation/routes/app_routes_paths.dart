@@ -1,4 +1,4 @@
-import 'package:easilybecho/learn_bloc/image_picer/image_picker_screen.dart';
+import 'package:easilybecho/learn_bloc/image_picker/image_picker_screen.dart';
 
 class AppRoutesPaths {
   // Authentication Routes
