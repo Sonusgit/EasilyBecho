@@ -21,7 +21,8 @@ class AppHelper {
     return 0;
   }
 
-  static String amountFormatter(num amount) {
+  static String amountFormatter(dynamic value) {
+    double amount = _parseValue(value);
     if (amount >= 10000000) {
       return '${(amount / 10000000).toStringAsFixed(2)}Cr';
     } else if (amount >= 100000) {
