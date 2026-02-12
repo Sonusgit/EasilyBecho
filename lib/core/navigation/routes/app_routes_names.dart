@@ -1,9 +1,10 @@
 class AppRoutesNames {
-  //  Authentication Routes
+  //Test bloc and learn bloc 
   static const String counterApp = 'counter_app';
   static const String switchExample = 'switch_example';
   static const imagePickerScreen = 'image_picker_screen';
-
+  static const toDoScreen = 'toDoScreen';
+  //  Authentication Routes
   static const String splash = 'splash';
   static const String welcome = 'welcome';
   static const String loginScreen = 'login_screen';

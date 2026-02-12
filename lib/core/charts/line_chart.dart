@@ -13,7 +13,7 @@ class LineChart extends StatelessWidget {
         child: Column(
           children: [
             Text('Line Chart',
-            style: context.text.titleSmall?.copyWith(
+            style: context.textTheme.titleSmall?.copyWith(
                 fontWeight: FontWeight.bold
             ),
 

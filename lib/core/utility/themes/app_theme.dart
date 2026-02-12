@@ -65,16 +65,16 @@ class AppTheme {
     inputDecorationTheme: InputDecorationTheme(
       iconColor: const Color(0xFF03DAC6),
       activeIndicatorBorder: BorderSide(width: .5, color: Colors.grey),
-      prefixIconColor: const Color(0xFF03DAC6),
-      suffixIconColor: const Color(0xFF03DAC6),
+      prefixIconColor:AppColors.primaryColor,
+      suffixIconColor: AppColors.primaryColor,
       filled: true,
       fillColor: Colors.white,
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(5),
         borderSide: BorderSide(width: .5, color: Colors.grey),
       ),
-      labelStyle: TextStyle(fontSize: 14),
-      hintStyle: TextStyle(fontSize: 13, color: Colors.grey),
+      // labelStyle: TextStyle(fontSize: 14),
+      // hintStyle: TextStyle(fontSize: 13, color: Colors.grey),
     ),
 
     colorScheme: ColorScheme(

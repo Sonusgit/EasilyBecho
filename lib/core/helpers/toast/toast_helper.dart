@@ -81,6 +81,19 @@ class ToastHelper {
     );
   }
 
+
+static void showSuccess(String title, [String? message]) =>
+    ToastHelper.success(title: title, message: message);
+
+static void showError(String title, [String? message]) =>
+    ToastHelper.error(title: title, message: message);
+
+static void showInfo(String title, [String? message]) =>
+    ToastHelper.info(title: title, message: message);
+
+static void showWarning(String title, [String? message]) =>
+    ToastHelper.warning(title: title, message: message);
+
   static OverlayState? _getOverlayState() {
     try {
       return AppKey.navigatorKey.currentState?.overlay;
@@ -269,15 +282,3 @@ class _ToastWidgetState extends State<_ToastWidget>
     );
   }
 }
-
-void showSuccess(String title, [String? message]) =>
-    ToastHelper.success(title: title, message: message);
-
-void showError(String title, [String? message]) =>
-    ToastHelper.error(title: title, message: message);
-
-void showInfo(String title, [String? message]) =>
-    ToastHelper.info(title: title, message: message);
-
-void showWarning(String title, [String? message]) =>
-    ToastHelper.warning(title: title, message: message);

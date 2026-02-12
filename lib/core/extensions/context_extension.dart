@@ -9,7 +9,7 @@ extension ContextX on BuildContext {
   double get bottomBarHeight => MediaQuery.of(this).viewInsets.bottom + kBottomNavigationBarHeight;
 
   ThemeData get theme => Theme.of(this);
-  TextTheme get text => theme.textTheme;
+  TextTheme get textTheme => theme.textTheme;
   ColorScheme get colors => theme.colorScheme;
   TextDirection get directionality => Directionality.of(this);
 

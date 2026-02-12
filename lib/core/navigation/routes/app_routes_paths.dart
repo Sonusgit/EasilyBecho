@@ -1,29 +1,30 @@
-import 'package:easilybecho/learn_bloc/image_picker/image_picker_screen.dart';
 
 class AppRoutesPaths {
-  // Authentication Routes
+  //Test bloc and learn bloc 
   static const String counterApp = '/counter_app';
   static const String switchExample = '/switch_example';
-  // image_picker_screen.dart
-  static const imagePickerScreen = '/image_picker_screen';
+  // image_picker_Page.dart
+  static const imagePickerPage = '/image_picker_Page';
+  static const toDoPage = '/toDoPage';
 
+  // Authentication Routes
   static const String splash = '/splash';
   static const String welcome = '/welcome';
-  static const String loginScreen = '/login_screen';
+  static const String login = '/login_Page';
   static const String signup = '/signup';
   static const String resetPassword = '/reset-password';
   static const String verifyEmail = '/verify-email';
 
   // Main App Routes
-  static const String bottomNavigationScreen = '/bottom_navigation';
-  static const String dashboardScreen = '/dashboard_screen';
+  static const String bottomNavigationPage = '/bottom_navigation';
+  static const String dashboardPage = '/dashboard_Page';
   static const String profile = '/profile';
   static const String settings = '/settings';
 
   static const String fiveStepform = '/fiveStepform';
 
-  /// other screens
-  static const billScreen = '/bill_screen';
+  /// other Pages
+  static const billPage = '/bill_Page';
   static const billsLastMonthCards = '/bills_last_month_cards';
 
   // Error Routes
@@ -37,14 +38,14 @@ class AppRoutesPaths {
     switchExample,
     splash,
     welcome,
-    loginScreen,
+    login,
     signup,
     resetPassword,
     verifyEmail,
-    dashboardScreen,
+    dashboardPage,
     profile,
     settings,
-    billScreen,
+    billPage,
     notFound,
     error,
   ];

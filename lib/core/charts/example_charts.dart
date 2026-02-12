@@ -1,7 +1,7 @@
 import 'package:easilybecho/core/charts/app_charts.dart';
 import 'package:easilybecho/core/charts/line_chart.dart';
 import 'package:easilybecho/core/extensions/context_extension.dart';
-import 'package:easilybecho/services/environment_config.dart';
+import 'package:easilybecho/core/network/configs/environment_config.dart';
 import 'package:flutter/material.dart';
 
 class ChartsExamplePage extends StatefulWidget {

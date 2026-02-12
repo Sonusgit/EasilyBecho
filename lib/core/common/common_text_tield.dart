@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CommonTextField extends StatelessWidget {
-  final String label;
+  final String labelText;
   final String? hintText;
   final TextEditingController controller;
   final TextInputType keyboardType;
@@ -30,7 +30,7 @@ class CommonTextField extends StatelessWidget {
 
   const CommonTextField({
     super.key,
-    required this.label,
+    required this.labelText,
     this.hintText,
     required this.controller,
     this.keyboardType = TextInputType.text,
@@ -46,7 +46,7 @@ class CommonTextField extends StatelessWidget {
     this.prefix,
     this.suffix,
     this.textInputAction = TextInputAction.next,
-    this.style = const TextStyle(fontSize: 16.0),
+    this.style = const TextStyle(),
     this.textAlign = TextAlign.start,
     this.textCapitalization = TextCapitalization.none,
     this.autofocus = false,
@@ -87,9 +87,9 @@ class CommonTextField extends StatelessWidget {
           : null,
 
       decoration: InputDecoration(
-        labelText: label,
-        hintText: 'Enter $label',
-        labelStyle: const TextStyle(fontSize: 20),
+        labelText: labelText,
+        hintText: 'Enter $labelText',
+        labelStyle: const TextStyle(),
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
         prefix: prefix,

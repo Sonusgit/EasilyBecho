@@ -1,15 +1,18 @@
-// image_picker_screen.dart
+// image_picker_Page.dart
 import 'dart:io';
 
 import 'package:easilybecho/core/extensions/size_extension.dart';
+import 'package:easilybecho/core/navigation/app_navigators.dart';
+import 'package:easilybecho/core/navigation/routes/app_routes_names.dart';
+import 'package:easilybecho/core/navigation/routes/app_routes_paths.dart';
 import 'package:easilybecho/learn_bloc/image_picker/bloc/image_picker_bloc.dart';
 import 'package:easilybecho/learn_bloc/image_picker/bloc/image_picker_event.dart';
 import 'package:easilybecho/learn_bloc/image_picker/bloc/image_picker_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ImagePickerScreen extends StatelessWidget {
-  const ImagePickerScreen({super.key});
+class ImagePickerPage extends StatelessWidget {
+  const ImagePickerPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +119,7 @@ class ImagePickerScreen extends StatelessWidget {
                 );
               },
             ),
+            ElevatedButton(onPressed: () => AppNavigators.push(AppRoutesPaths.toDoPage), child: Text('go to ToDo'))
           ],
         ),
       ),
