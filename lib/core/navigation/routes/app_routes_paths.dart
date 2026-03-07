@@ -1,6 +1,6 @@
-
 class AppRoutesPaths {
-  //Test bloc and learn bloc 
+  AppRoutesPaths._();
+  //Test bloc and learn bloc
   static const String counterApp = '/counter_app';
   static const String switchExample = '/switch_example';
   // image_picker_Page.dart
@@ -23,14 +23,39 @@ class AppRoutesPaths {
 
   static const String fiveStepform = '/fiveStepform';
 
-  /// other Pages
-  static const billPage = '/bill_Page';
+  // inventory management
+  static const String inventoryPage = '/inventory_page';
+  // product return management
+  static const String productReturnPage = '/product_return_page';
+  // bills management
+  static const String billPage = '/bill_page';
   static const billsLastMonthCards = '/bills_last_month_cards';
+
+  // sales management
+  static const String salesPage = '/sales_page';
+  // dues management
+  static const String duesPage = '/dues_page';
+  // account management
+  static const String accountPage = '/account_page';
+
+  // customer management
+  static const String customerPage = '/customer_page';
+
+  // Hsn management
+  static const String hsnPage = '/hsn_page';
+
+  // shop management
+  static const String shopPage = '/shop_page';
+
+  // subscription management
+  static const String subscriptionPage = '/subscription_page';
 
   // Error Routes
   static const String noInternetConnection = '/no-internet-connection';
   static const String notFound = '/404';
   static const String error = '/error';
+
+  /// other Pages
 
   // Get all routes as a list for easy reference
   static List<String> get allRoutes => [
@@ -45,7 +70,35 @@ class AppRoutesPaths {
     dashboardPage,
     profile,
     settings,
+     // inventory management
+    inventoryPage,
+
+    // bills management
     billPage,
+    billsLastMonthCards,
+
+    // sales management
+    salesPage,
+
+    // dues management
+    duesPage,
+
+    // account management
+    accountPage,
+
+    // customer management
+    customerPage,
+
+    // hsn management
+    hsnPage,
+
+    // shop management
+    shopPage,
+
+    // subscription management
+    subscriptionPage,
+
+   
     notFound,
     error,
   ];

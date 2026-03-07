@@ -1,87 +1,50 @@
-import 'package:easilybecho/core/di/injection.dart';
-import 'package:easilybecho/core/extensions/app_log_print_extention.dart';
-import 'package:easilybecho/core/network/configs/api_constants.dart';
-import 'package:easilybecho/core/network/services/api_service.dart';
-import 'package:easilybecho/core/network/services/secure_storage_helper.dart';
+import 'package:easilybecho/core/data/error/app_exception.dart';
+import 'package:easilybecho/core/data/configs/api_constants.dart';
+import 'package:easilybecho/core/data/services/api_response.dart';
+import 'package:easilybecho/core/data/services/api_service.dart';
+import 'package:easilybecho/core/data/services/secure_storage_helper.dart';
 import 'package:easilybecho/views/features/auth/models/login_request.dart';
 import 'package:easilybecho/views/features/auth/models/login_response_model.dart';
+import 'package:easilybecho/views/features/auth/models/signup_request.dart';
+import 'package:easilybecho/views/features/auth/models/signup_response.dart';
+import 'package:easilybecho/views/features/auth/repo/auth_repo.dart';
 
-class AuthRepository {
-  final ApiService _apiService = getIt<ApiService>();
+class LoginRepo implements AuthRepo {
+  final ApiService _apiService = ApiService();
 
-  // Login
-  Future<LoginResponseModel?> login(LoginRequest request) async {
+  @override
+  Future<ApiResponse<LoginResponse>> login(LoginRequest request) async {
     try {
-      "Login attempt for: ${request.email}".logInfo(tag: 'AuthRepository');
-
-      final response = await _apiService.post(
+      final data = await _apiService.postApi(
         endpoint: ApiConstants.login,
         data: request.toJson(),
-        requiresAuth: false,
       );
 
-      if (response == null) {
-        "Login failed - No response".logWarning(tag: 'AuthRepository');
-        return null;
-      }
+      final response = LoginResponse.fromJson(
+        Map<String, dynamic>.from(data as Map),
+      );
 
-      final loginResponse = LoginResponseModel.fromJson(response.data);
+      await SecureStorageHelper.saveUserData(
+        accessToken: response.accessToken,
+        userId: response.userId,
+        email: response.email,
+        name: response.name,
+        phone: response.phone,
+      );
 
-      if (response.statusCode == 200 && loginResponse.payload != null) {
-        // Save user data
-        await _saveUserData(loginResponse.payload!);
-
-        // Initialize auth interceptor
-        _apiService.initAuth();
-
-        "Login successful for: ${request.email}".logInfo(tag: 'AuthRepository');
-      }
-
-      return loginResponse;
-    } catch (e, stackTrace) {
-      "Login error".logError(e, stackTrace, tag: 'AuthRepository');
-      return null;
+      return ApiResponse.completed(data: response, message: 'Login successful');
+    } on AppException catch (e) {
+      return ApiResponse.error(message: e.message);
+    } catch (e) {
+      return ApiResponse.error(message: e.toString());
     }
   }
 
-  // Save user data to secure storage
-  Future<void> _saveUserData(UserData userData) async {
-    await SecureStorageHelper.saveUserData(
-      accessToken: userData.accessToken,
-      userId: userData.userId,
-      email: userData.email,
-      phone: userData.phone,
-      name: userData.name,
-    );
-  }
+  @override
+  Future<ApiResponse<SignupResponse>> signup(SignupRequest request) =>
+      throw UnimplementedError('Use SignupRepo for signup');
 
-  // Logout
-  Future<void> logout() async {
-    try {
-      "Logout initiated".logInfo(tag: 'AuthRepository');
-
-      await _apiService.post(
-        endpoint: ApiConstants.logout,
-        requiresAuth: true,
-        showToast: false,
-      );
-
-      // Clear storage and remove auth
-      await SecureStorageHelper.clearAllUserData();
-      _apiService.removeAuth();
-
-      "Logout successful".logInfo(tag: 'AuthRepository');
-    } catch (e, stackTrace) {
-      "Logout error".logError(e, stackTrace, tag: 'AuthRepository');
-
-      // Even if API fails, clear local data
-      await SecureStorageHelper.clearAllUserData();
-      _apiService.removeAuth();
-    }
-  }
-
-  // Check if user is logged in
-  Future<bool> isLoggedIn() async {
-    return await SecureStorageHelper.isAuthenticated();
-  }
+  @override
+  Future<ApiResponse<void>> logout() =>
+      throw UnimplementedError('Use LogoutRepo for logout');
 }

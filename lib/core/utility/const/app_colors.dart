@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
+  AppColors._();
   static const Color primaryColor = Color(0xFF6366F1);
   static const Color secondaryColor = Color(0xFF03DAC6);
   static const Color backgroundColor = Color(0xFFFFFFFF);
@@ -8,5 +9,9 @@ class AppColors {
   static const Color textSecondaryColor = Color(0xFF757575);
   static const Color borderColor = Color(0xFF9E9E9E);
   static const Color scaffoldBackgroundColor = Color(0xFFFFFFFF);
-  
+
+  static const List<Color> primaryGradientColors = [
+    primaryColor,
+    Color(0xFF1B1C78),
+  ];
 }

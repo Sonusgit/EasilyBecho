@@ -6,6 +6,8 @@ import 'package:go_router/go_router.dart';
 
 
 class AppNavigators {
+  AppNavigators._();
+
   // Get GoRouter instance
   static GoRouter get _router =>AppPages.routes;
   

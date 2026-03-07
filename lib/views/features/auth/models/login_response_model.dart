@@ -1,53 +1,23 @@
-class LoginResponseModel {
-  final String status;
-  final String message;
-  final UserData? payload;
-  final int statusCode;
-
-  LoginResponseModel({
-    required this.status,
-    required this.message,
-    this.payload,
-    required this.statusCode,
-  });
-
-  factory LoginResponseModel.fromJson(Map<String, dynamic> json) {
-    return LoginResponseModel(
-      status: json['status'] ?? '',
-      message: json['message'] ?? '',
-      payload: json['payload'] != null 
-          ? UserData.fromJson(json['payload']) 
-          : null,
-      statusCode: json['statusCode'] ?? 0,
-    );
-  }
-}
-
-class UserData {
-  final String userId;
-  final String email;
-  final String? name;
-  final String? phone;
+class LoginResponse {
   final String accessToken;
-  final String? refreshToken;
+  final String userId;
+  final String? name;
+  final String? email;
+  final String? phone;
 
-  UserData({
-    required this.userId,
-    required this.email,
-    this.name,
-    this.phone,
+  const LoginResponse({
     required this.accessToken,
-    this.refreshToken,
+    required this.userId,
+    this.name,
+    this.email,
+    this.phone,
   });
 
-  factory UserData.fromJson(Map<String, dynamic> json) {
-    return UserData(
-      userId: json['userId'] ?? json['id'] ?? '',
-      email: json['email'] ?? '',
-      name: json['name'],
-      phone: json['phone'],
-      accessToken: json['accessToken'] ?? json['token'] ?? '',
-      refreshToken: json['refreshToken'],
-    );
-  }
+  factory LoginResponse.fromJson(Map<String, dynamic> json) => LoginResponse(
+        accessToken: json['access_token'] ?? json['token'] ?? '',
+        userId: json['user']?['id']?.toString() ?? json['id']?.toString() ?? '',
+        name: json['user']?['name'] ?? json['name'],
+        email: json['user']?['email'] ?? json['email'],
+        phone: json['user']?['phone'] ?? json['phone'],
+      );
 }
