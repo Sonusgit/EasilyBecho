@@ -1,3 +1,4 @@
+import 'package:easilybecho/core/common/user_loction/bloc/user_location_bloc.dart';
 import 'package:easilybecho/core/data/network/network_info.dart';
 import 'package:easilybecho/views/features/auth/bloc/auth_bloc.dart';
 import 'package:easilybecho/views/features/auth/repo/auth_repo.dart';
@@ -17,4 +18,5 @@ Future<void> setupDependencies() async {
 
   // ─── Bloc ─────────────────────────────────────────────────────────────────
   getIt.registerFactory(() => AuthBloc(authRepo: getIt<AuthRepo>()));
+  getIt.registerFactory(() => UserLocationBloc());
 }

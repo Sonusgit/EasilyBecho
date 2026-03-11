@@ -11,13 +11,14 @@ import 'package:permission_handler/permission_handler.dart';
 abstract class BaseApiService {
   final Dio _dio = DioClient.instance;
 
-  // ─── Retry config ────────────────────────────────────────────────────────────
-  // DNS takes 2–6s to resolve after internet reconnects on real devices.
-  // We retry silently instead of throwing immediately.
-  static const int _maxRetries     = 4;
-  static const Duration _retryDelay = Duration(seconds: 2);
+  // ─── Retry config ─────────────────────────────────────────────────────────
+  // Railway free tier cold start = 30–60s wake up time.
+  // Retry silently while server is waking up.
+  // Delays: 5s → 10s → 15s → 20s → 25s (total ~75s max wait)
+  static const int _maxRetries      = 5;
+  static const Duration _retryDelay = Duration(seconds: 5);
 
-  // ─── Auth Header ─────────────────────────────────────────────────────────────
+  // ─── Auth Header ──────────────────────────────────────────────────────────
 
   Future<Options> _buildOptions(bool requiresAuth) async {
     if (!requiresAuth) return Options();
@@ -29,23 +30,36 @@ abstract class BaseApiService {
     );
   }
 
-  // ─── Is retryable error ──────────────────────────────────────────────────────
+  // ─── Should Retry ─────────────────────────────────────────────────────────
+  // ✅ FIX: 'Failed host lookup' is a DNS error — MUST be retried
+  // It happens for 2–6s after internet reconnects. Not a permanent failure.
 
   bool _shouldRetry(Object e) {
     if (e is DioException) {
-      if (e.type == DioExceptionType.connectionError) return true;
+      // Connection level errors → always retry
+      if (e.type == DioExceptionType.connectionError)   return true;
       if (e.type == DioExceptionType.connectionTimeout) return true;
+      if (e.type == DioExceptionType.sendTimeout)       return true;
+      if (e.type == DioExceptionType.receiveTimeout)    return true;
+
+      // DNS specific errors → retry (this is the main fix)
       final msg = e.message ?? '';
-      if (msg.contains('Failed host lookup')) return true;
-      if (msg.contains('No address associated')) return true;
-      if (msg.contains('SocketException')) return true;
-      if (msg.contains('Connection refused')) return true;
+      if (msg.contains('Failed host lookup'))          return true;
+      if (msg.contains('No address associated'))       return true;
+      if (msg.contains('SocketException'))             return true;
+      if (msg.contains('Connection refused'))          return true;
+      if (msg.contains('Network is unreachable'))      return true;
+      if (msg.contains('connection error'))            return true;
+
+      // Inner error check
+      final inner = e.error;
+      if (inner is SocketException)                    return true;
     }
     if (e is SocketException) return true;
     return false;
   }
 
-  // ─── Safe Request Wrapper ────────────────────────────────────────────────────
+  // ─── Safe Request Wrapper ─────────────────────────────────────────────────
 
   Future<dynamic> _request(Future<Response> Function() call) async {
     int attempt = 0;
@@ -57,18 +71,19 @@ abstract class BaseApiService {
       } catch (e) {
         if (_shouldRetry(e) && attempt < _maxRetries) {
           attempt++;
-          await Future.delayed(_retryDelay);
-          continue; // silent retry
+          // Exponential delay: 5s, 10s, 15s, 20s, 25s — covers Railway cold start
+          await Future.delayed(_retryDelay * attempt);
+          continue;
         }
-        // Max retries exceeded or non-retryable error
+        // All retries exhausted
         if (e is DioException) throw ExceptionMapper.fromDioException(e);
-        if (e is AppException) rethrow;
-        throw NoInternetException(); // after all retries = no internet
+        if (e is AppException)  rethrow;
+        throw NoInternetException();
       }
     }
   }
 
-  // ─── GET ─────────────────────────────────────────────────────────────────────
+  // ─── GET ──────────────────────────────────────────────────────────────────
 
   Future<dynamic> getApi({
     required String endpoint,
@@ -82,7 +97,7 @@ abstract class BaseApiService {
         ),
       );
 
-  // ─── POST ────────────────────────────────────────────────────────────────────
+  // ─── POST ─────────────────────────────────────────────────────────────────
 
   Future<dynamic> postApi({
     required String endpoint,
@@ -98,7 +113,7 @@ abstract class BaseApiService {
         ),
       );
 
-  // ─── PUT ─────────────────────────────────────────────────────────────────────
+  // ─── PUT ──────────────────────────────────────────────────────────────────
 
   Future<dynamic> putApi({
     required String endpoint,
@@ -114,7 +129,7 @@ abstract class BaseApiService {
         ),
       );
 
-  // ─── PATCH ───────────────────────────────────────────────────────────────────
+  // ─── PATCH ────────────────────────────────────────────────────────────────
 
   Future<dynamic> patchApi({
     required String endpoint,
@@ -130,7 +145,7 @@ abstract class BaseApiService {
         ),
       );
 
-  // ─── DELETE ──────────────────────────────────────────────────────────────────
+  // ─── DELETE ───────────────────────────────────────────────────────────────
 
   Future<dynamic> deleteApi({
     required String endpoint,
@@ -146,7 +161,7 @@ abstract class BaseApiService {
         ),
       );
 
-  // ─── UPLOAD (FormData) ───────────────────────────────────────────────────────
+  // ─── UPLOAD (FormData) ────────────────────────────────────────────────────
 
   Future<dynamic> multipartApi({
     required String endpoint,
@@ -169,7 +184,7 @@ abstract class BaseApiService {
     );
   }
 
-  // ─── DOWNLOAD ────────────────────────────────────────────────────────────────
+  // ─── DOWNLOAD ─────────────────────────────────────────────────────────────
 
   String _resolveFileName(String endpoint, String? customName) {
     if (customName != null && customName.isNotEmpty) return customName;

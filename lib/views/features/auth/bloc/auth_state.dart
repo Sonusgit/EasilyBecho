@@ -6,17 +6,20 @@ class AuthState {
   final ApiResponse<LoginResponse> loginResponse;
   final ApiResponse<SignupResponse> signupResponse;
   final ApiResponse<void> logoutResponse;
+  final ApiResponse<void> testGetApiResponse;
 
   const AuthState({
     required this.loginResponse,
     required this.signupResponse,
     required this.logoutResponse,
+      required this.testGetApiResponse ,
   });
 
   factory AuthState.initial() => AuthState(
     loginResponse: ApiResponse(),
     signupResponse: ApiResponse(),
     logoutResponse: ApiResponse(),
+    testGetApiResponse: ApiResponse(),
   );
 
   AuthState copyWith({
@@ -27,5 +30,6 @@ class AuthState {
     loginResponse: loginResponse ?? this.loginResponse,
     signupResponse: signupResponse ?? this.signupResponse,
     logoutResponse: logoutResponse ?? this.logoutResponse,
+    testGetApiResponse: testGetApiResponse ?? this.testGetApiResponse,
   );
 }

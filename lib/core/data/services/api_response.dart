@@ -5,7 +5,7 @@ class ApiResponse<T> {
   final String? message;
   final T? data;
 
-  // Default constructor — starts as loading (acts as initial/idle state)
+  // Default constructor
   ApiResponse({this.status = ApiStatus.initial, this.message, this.data});
 
   ApiResponse.loading()
@@ -14,6 +14,8 @@ class ApiResponse<T> {
       data = null;
 
   ApiResponse.completed({this.data, this.message}) : status = ApiStatus.success;
+
+  ApiResponse.empty({this.message}) : status = ApiStatus.empty, data = null;
 
   ApiResponse.error({this.message, this.data}) : status = ApiStatus.error;
 }

@@ -6,9 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 
-class LocationBloc
+class UserLocationBloc
     extends Bloc<UserLocationEvent, ApiResponse<UserLocationModel>> {
-  LocationBloc() : super(ApiResponse()) {
+  UserLocationBloc() : super(ApiResponse()) {
     on<FetchLocationEvent>(_onFetchLocation);
     on<ClearLocationEvent>(_onClearLocation);
   }

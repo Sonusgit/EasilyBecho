@@ -15,7 +15,7 @@ static const int connectTimeout = 30000; // 30 seconds
   static const String accept = 'application/json';
 
   // Endpoints
-  static const String login = 'https://backend-production-91e4.up.railway.app/login/jwt';
+  static const String login = '/login/jwt';
   static const String register = 'auth/register';
   static const String refreshToken = 'auth/refresh-token';
   static const String logout = 'auth/logout';

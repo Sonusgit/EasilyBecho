@@ -23,7 +23,7 @@ class AppPages {
     debugLogDiagnostics: true,
     errorBuilder: (context, state) =>
         const Scaffold(body: Center(child: Text('Error: Route not found'))),
-    initialLocation: AppRoutesPaths.dashboardPage,
+    initialLocation: AppRoutesPaths.login,
     routes: [
       ShellRoute(
         builder: (context, state, child) {

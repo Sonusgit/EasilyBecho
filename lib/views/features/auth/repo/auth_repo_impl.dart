@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easilybecho/core/data/error/app_exception.dart';
 import 'package:easilybecho/core/data/configs/api_constants.dart';
 import 'package:easilybecho/core/data/services/api_response.dart';
@@ -21,6 +23,7 @@ class AuthRepoImpl implements AuthRepo {
         endpoint: ApiConstants.login,
         data: request.toJson(),
       );
+      log('Login API response: $data');
       final response = LoginResponse.fromJson(
         Map<String, dynamic>.from(data as Map),
       );
@@ -31,6 +34,7 @@ class AuthRepoImpl implements AuthRepo {
         name: response.name,
         phone: response.phone,
       );
+      
       return ApiResponse.completed(data: response, message: 'Login successful');
     } on AppException catch (e) {
       return ApiResponse.error(message: e.message);

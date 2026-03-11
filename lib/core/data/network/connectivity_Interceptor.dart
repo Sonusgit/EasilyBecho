@@ -1,24 +1,17 @@
-import 'dart:async';
-
 import 'package:dio/dio.dart';
 import 'package:easilybecho/core/data/network/connectivity_manager.dart';
 
+/// FIX: DNS errors (Failed host lookup) must NOT be blocked here.
+/// Let them pass to BaseApiService which retries with delay.
+/// 
+/// This interceptor only blocks when ConnectivityResult.none 
+/// (i.e. WiFi/Mobile data fully OFF).
 class ConnectivityInterceptor extends Interceptor {
   final ConnectivityManager _connectivityManager = ConnectivityManager();
-  final int maxRetries;
-  final Duration retryDelay;
-
-  ConnectivityInterceptor({
-    this.maxRetries = 3,
-    this.retryDelay = const Duration(seconds: 2),
-  });
 
   @override
-  void onRequest(
-    RequestOptions options,
-    RequestInterceptorHandler handler,
-  ) async {
-    // Check connection before making request
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    // Only block if device has NO network interface at all (flight mode etc.)
     if (!_connectivityManager.isConnected) {
       return handler.reject(
         DioException(
@@ -28,61 +21,11 @@ class ConnectivityInterceptor extends Interceptor {
         ),
       );
     }
-    super.onRequest(options, handler);
+
+    // ✅ Even if DNS might fail — let it through
+    // BaseApiService._request() will retry up to 4x with 2s delay
+    handler.next(options);
   }
 
-  @override
-  void onError(DioException err, ErrorInterceptorHandler handler) async {
-    if (_shouldRetry(err)) {
-      final retryCount = err.requestOptions.extra['retryCount'] ?? 0;
-
-      if (retryCount < maxRetries) {
-        // Wait for connection to be restored
-        await _waitForConnection();
-        await Future.delayed(retryDelay);
-
-        // Retry the request
-        err.requestOptions.extra['retryCount'] = retryCount + 1;
-
-        try {
-          final dio = Dio();
-          final response = await dio.fetch(err.requestOptions);
-          return handler.resolve(response);
-        } catch (e) {
-          return super.onError(err, handler);
-        }
-      }
-    }
-    super.onError(err, handler);
-  }
-
-  bool _shouldRetry(DioException err) {
-    return err.type == DioExceptionType.connectionTimeout ||
-        err.type == DioExceptionType.receiveTimeout ||
-        err.type == DioExceptionType.sendTimeout ||
-        err.type == DioExceptionType.connectionError ||
-        (err.response?.statusCode ?? 0) >= 500;
-  }
-
-  Future<void> _waitForConnection() async {
-    if (_connectivityManager.isConnected) return;
-
-    final completer = Completer<void>();
-    late StreamSubscription subscription;
-
-    subscription = _connectivityManager.connectionStream.listen((isConnected) {
-      if (isConnected) {
-        subscription.cancel();
-        completer.complete();
-      }
-    });
-
-    // Timeout after 30 seconds
-    return completer.future.timeout(
-      const Duration(seconds: 30),
-      onTimeout: () {
-        subscription.cancel();
-      },
-    );
-  }
+  // ❌ NO onError override — BaseApiService handles all retries
 }

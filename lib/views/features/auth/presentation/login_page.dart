@@ -1,6 +1,9 @@
 import 'package:easilybecho/core/common/common_buttons.dart';
 import 'package:easilybecho/core/common/common_text_tield.dart';
 import 'package:easilybecho/core/di/injection.dart';
+import 'package:easilybecho/core/helpers/toast/toast_helper.dart';
+import 'package:easilybecho/core/navigation/app_navigators.dart';
+import 'package:easilybecho/core/navigation/routes/app_routes_paths.dart';
 import 'package:easilybecho/core/utility/const/app_enums.dart';
 import 'package:easilybecho/core/validator/validator_helper.dart';
 import 'package:easilybecho/views/features/auth/bloc/auth_bloc.dart';
@@ -18,10 +21,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _formKey            = GlobalKey<FormState>();
-  final _emailController    = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  bool _passwordVisible     = false;
+  bool _passwordVisible = false;
 
   @override
   void dispose() {
@@ -33,13 +36,13 @@ class _LoginPageState extends State<LoginPage> {
   void _onLogin(BuildContext context) {
     if (!_formKey.currentState!.validate()) return;
     context.read<AuthBloc>().add(
-          LoginEvent(
-            LoginRequest(
-              email: _emailController.text.trim(),
-              password: _passwordController.text,
-            ),
-          ),
-        );
+      LoginEvent(
+        LoginRequest(
+          email: _emailController.text.trim(),
+          password: _passwordController.text,
+        ),
+      ),
+    );
   }
 
   @override
@@ -52,17 +55,10 @@ class _LoginPageState extends State<LoginPage> {
         listener: (context, state) {
           final res = state.loginResponse;
           if (res.status == ApiStatus.success) {
-            // context.go('/home');
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(res.message ?? 'Welcome!')),
-            );
+            ToastHelper.success(title: res.message ?? 'Login successful!');
+            AppNavigators.go(AppRoutesPaths.dashboardPage);
           } else if (res.status == ApiStatus.error) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(res.message ?? 'Login failed.'),
-                backgroundColor: Colors.red,
-              ),
-            );
+            ToastHelper.error(title: res.message ?? 'Login failed!');
           }
         },
         builder: (context, state) {
@@ -101,8 +97,9 @@ class _LoginPageState extends State<LoginPage> {
                               ? Icons.visibility_off_outlined
                               : Icons.visibility_outlined,
                         ),
-                        onPressed: () =>
-                            setState(() => _passwordVisible = !_passwordVisible),
+                        onPressed: () => setState(
+                          () => _passwordVisible = !_passwordVisible,
+                        ),
                       ),
                       validator: ValidatorHelper.validPassword,
                     ),

@@ -4,94 +4,92 @@ import 'package:easilybecho/core/data/error/app_exception.dart';
 class ExceptionMapper {
   ExceptionMapper._();
 
-  static AppException fromDioException(DioException error) {
-    switch (error.type) {
+  static AppException fromDioException(DioException e) {
+    switch (e.type) {
+
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
         return const TimeoutException();
 
       case DioExceptionType.connectionError:
+        final msg   = e.message ?? '';
+        final inner = e.error?.toString() ?? '';
+        if (msg.contains('Failed host lookup') ||
+            inner.contains('Failed host lookup') ||
+            inner.contains('No address associated') ||
+            inner.contains('errno = 7')) {
+          return const ServerUnavailableException();
+        }
         return const NoInternetException();
 
       case DioExceptionType.badResponse:
-        return _handleResponseError(error.response);
+        // ✅ Always extract server message first
+        return _fromStatusCode(e.response?.statusCode, e.response?.data);
 
       case DioExceptionType.cancel:
-        return const UnknownException(message: 'Request was cancelled.');
-
-      case DioExceptionType.unknown:
-        if (error.message?.contains('SocketException') == true ||
-            error.message?.contains('No address associated') == true) {
-          return const NoInternetException();
-        }
-        return UnknownException(message: error.message ?? 'Unknown error');
+        return const RequestCancelledException();
 
       default:
-        return UnknownException(message: error.message ?? 'Unknown error');
+        return UnknownException(message: e.message ?? 'Something went wrong.');
     }
   }
 
-  static AppException _handleResponseError(Response? response) {
-    if (response == null) {
-      return const UnknownException(message: 'No response from server.');
-    }
-
-    final statusCode = response.statusCode;
-    final message = _extractMessage(response.data);
+  static AppException _fromStatusCode(int? statusCode, dynamic data) {
+    // ✅ Server ka message pehle lo — jaise "Login failed - invalid credentials"
+    final serverMessage = _extractMessage(data);
 
     switch (statusCode) {
       case 400:
-        return ServerException(
-          message: message ?? 'Bad request.',
-          statusCode: statusCode,
-          code: 'BAD_REQUEST',
-          data: response.data,
+        return BadRequestException(
+          message: serverMessage ?? 'Bad request.',
         );
       case 401:
-        return const UnauthorizedException();
+        // ✅ FIX: Server message use karo (e.g. "Login failed - invalid credentials")
+        // Pehle: hardcoded "Session expired" — wrong for login failure!
+        return UnauthorizedException(
+          message: serverMessage ?? 'Invalid credentials.',
+        );
       case 403:
-        return const ForbiddenException();
+        return ForbiddenException(
+          message: serverMessage ?? 'You do not have permission.',
+        );
       case 404:
-        return const NotFoundException();
+        return NotFoundException(
+          message: serverMessage ?? 'Resource not found.',
+        );
+      case 408:
+        return const TimeoutException();
       case 422:
-        return ServerException(
-          message: message ?? 'Validation failed.',
-          statusCode: statusCode,
-          code: 'VALIDATION_ERROR',
-          data: response.data,
+        return BadRequestException(
+          message: serverMessage ?? 'Validation failed.',
         );
       case 429:
-        return ServerException(
-          message: 'Too many requests. Please slow down.',
-          statusCode: statusCode,
-          code: 'RATE_LIMIT',
-        );
+        return const TooManyRequestsException();
       case 500:
       case 502:
       case 503:
+      case 504:
         return ServerException(
-          message: message ?? 'Server error. Please try again later.',
-          statusCode: statusCode,
-          code: 'SERVER_ERROR',
+          message: serverMessage ?? 'Server error. Please try again.',
         );
       default:
-        return ServerException(
-          message: message ?? 'Something went wrong.',
-          statusCode: statusCode,
+        return UnknownException(
+          message: serverMessage ?? 'Unexpected error ($statusCode).',
         );
     }
   }
 
+  // ✅ Extracts "message" from server response
+  // Handles: { "status": "Failed", "message": "Login failed...", "statusCode": 401 }
   static String? _extractMessage(dynamic data) {
     if (data == null) return null;
-    if (data is Map<String, dynamic>) {
-      return data['message'] ??
-          data['error'] ??
-          data['detail'] ??
-          data['msg'];
+    if (data is Map) {
+      return data['message']?.toString() ??
+             data['error']?.toString()   ??
+             data['msg']?.toString();
     }
-    if (data is String) return data;
+    if (data is String && data.isNotEmpty) return data;
     return null;
   }
 }

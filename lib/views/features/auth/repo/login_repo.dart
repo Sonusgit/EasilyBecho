@@ -47,4 +47,10 @@ class LoginRepo implements AuthRepo {
   @override
   Future<ApiResponse<void>> logout() =>
       throw UnimplementedError('Use LogoutRepo for logout');
+      
+        @override
+        Future<ApiResponse<void>> testGetapi() {
+          // TODO: implement testGetapi
+          throw UnimplementedError();
+        }
 }
